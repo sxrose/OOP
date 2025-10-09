@@ -1,20 +1,31 @@
 package ru.nsu.sxrose1.expr;
 
-public final class Add extends BinaryExpression {
+import java.util.function.BinaryOperator;
+
+public final class Add extends AssociativeBinaryExpression {
+  /**
+   * @param lhs Left hand side of expression.
+   * @param rhs Right hand side of expression.
+   */
   public Add(Expression lhs, Expression rhs) {
     super(lhs, rhs);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected String getOpSign() {
-    return "+";
+  public BinaryOperator<Double> operator() {
+    return Double::sum;
   }
 
   /** {@inheritDoc} */
   @Override
-  public Expression simplify() {
-    // TODO: write simplify for Add
-    return this;
+  public double identity() {
+    return 0.0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected String repr() {
+    return "+";
   }
 }

@@ -1,5 +1,7 @@
 package ru.nsu.sxrose1.expr;
 
+import java.util.function.BinaryOperator;
+
 public class Div extends BinaryExpression {
   /**
    * @param lhs Left hand side of expression.
@@ -11,14 +13,27 @@ public class Div extends BinaryExpression {
 
   /** {@inheritDoc} */
   @Override
-  protected String getOpSign() {
-    return "/";
+  public BinaryOperator<Double> operator() {
+    return (a, b) -> a / b;
   }
 
   /** {@inheritDoc} */
   @Override
-  public Expression simplify() {
-    // TODO: write simplify for Div
+  protected Expression simplifyCancelOutInplace() {
+    if (lhs instanceof Number) {
+      if (((Number) lhs).value == 0.0) return new Number(0.0);
+    }
+
+    if (rhs instanceof Number) {
+      if (((Number) rhs).value == 1.0) return lhs;
+    }
+
     return this;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected String repr() {
+    return "/";
   }
 }
