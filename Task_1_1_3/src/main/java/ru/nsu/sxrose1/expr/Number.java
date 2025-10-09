@@ -12,6 +12,12 @@ public class Number extends Expression {
 
   /** {@inheritDoc} */
   @Override
+  public boolean exprEquals(Expression other) {
+    return (other instanceof Number) && (((Number) other).value == this.value);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public String toString() {
     return Double.toString(value);
   }

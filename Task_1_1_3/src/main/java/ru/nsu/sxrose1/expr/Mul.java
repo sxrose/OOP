@@ -1,6 +1,9 @@
 package ru.nsu.sxrose1.expr;
 
-public class Mul extends BinaryExpression {
+import java.util.function.BinaryOperator;
+
+public class Mul extends AssociativeBinaryExpression {
+
   /**
    * @param lhs Left hand side of expression.
    * @param rhs Right hand side of expression.
@@ -11,14 +14,19 @@ public class Mul extends BinaryExpression {
 
   /** {@inheritDoc} */
   @Override
-  protected String getOpSign() {
-    return "*";
+  public BinaryOperator<Double> operator() {
+    return (a, b) -> a * b;
   }
 
   /** {@inheritDoc} */
   @Override
-  public Expression simplify() {
-    // TODO: write simplify for Mul
-    return this;
+  public double identity() {
+    return 1.0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected String repr() {
+    return "*";
   }
 }

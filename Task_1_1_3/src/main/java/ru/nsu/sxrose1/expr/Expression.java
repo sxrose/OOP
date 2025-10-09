@@ -1,12 +1,38 @@
 package ru.nsu.sxrose1.expr;
 
-public abstract class Expression {
+public abstract class Expression implements Cloneable {
+  /**
+   * Indicates whether some other expression is equal to this one. Two expressions are the same if
+   * and only if they are the same object or structurally constitute the same expression tree up to
+   * associativity.
+   *
+   * @param other the expression with which to compare
+   * @return {@code true}, if {@code object} is @{code Expression} and is equal to this one.
+   * @see Expression#equals(Object)
+   */
+  public abstract boolean exprEquals(Expression other);
+
+  /**
+   * Indicates whether some other object is "equal to" this expression. Two expressions are the same
+   * if and only if they are the same object or structurally constitute the same expression tree up
+   * to associativity.
+   *
+   * @param other the reference object with which to compare
+   * @return {@code true}, if {@code object} is @{code Expression} and is equal to this one.
+   * @see Expression#exprEquals(Expression)
+   */
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return (other instanceof Expression) && this.exprEquals((Expression) other);
+  }
+
   /** Returns a string representation of the expression. */
   @Override
   public abstract String toString();
 
   /** Prints out representation of expression to standard output. */
-  public void print() {
+  public final void print() {
     System.out.print(this.toString());
   }
 
@@ -18,4 +44,27 @@ public abstract class Expression {
    *     otherwise.
    */
   public abstract Expression simplify();
+
+  /**
+   * Performs shallow copy of Expression.
+   *
+   * @return shallow copy of {@code this}.
+   */
+  public final Expression shallowCopy() {
+    try {
+      return (Expression) super.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new AssertionError();
+    }
+  }
+
+  /**
+   * Performs deep copy of Expression.
+   *
+   * @return deep copy of {@code this}.
+   */
+  @Override
+  public Expression clone() {
+    return this.shallowCopy();
+  }
 }

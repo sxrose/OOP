@@ -11,7 +11,39 @@ public abstract class AssociativeBinaryExpression extends BinaryExpression {
 
   /** {@inheritDoc} */
   @Override
+  public boolean exprEquals(Expression other) {
+    if (this.getClass() != other.getClass()) return false;
+
+    AssociativeBinaryExpression otherAssoc = (AssociativeBinaryExpression) other;
+
+    if (this.lhs.equals(otherAssoc.lhs)) return this.rhs.equals(otherAssoc.rhs);
+    if (this.lhs.equals(otherAssoc.rhs)) return this.rhs.equals(otherAssoc.lhs);
+
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public boolean isAssociative() {
     return true;
+  }
+
+  /**
+   * @return identity element of associative binary operation.
+   */
+  public abstract double identity();
+
+  /** {@inheritDoc} */
+  @Override
+  protected Expression simplifyCancelOutInplace() {
+    if (lhs instanceof Number) {
+      if (((Number) lhs).value == identity()) return rhs;
+    }
+
+    if (rhs instanceof Number) {
+      if (((Number) rhs).value == identity()) return lhs;
+    }
+
+    return this;
   }
 }
