@@ -124,18 +124,16 @@ public class ParseUtils {
   }
 
   private static Optional<Expression> prattParseLHS(Queue<Token> tokens) {
-    assert (!tokens.isEmpty());
-
     var negOpt =
-        Optional.of(tokens.peek())
-            .flatMap(
+        Optional.ofNullable(tokens.peek())
+            .map(
                 (t) -> {
                   if (t.tokenType == TokenType.OP && t.opValue == OpType.SUB) {
                     tokens.poll();
-                    return Objects.isNull(tokens.peek()) ? Optional.empty() : Optional.of(true);
+                    return true;
                   }
 
-                  return Optional.of(false);
+                  return false;
                 });
 
     if (negOpt.isEmpty()) return Optional.empty();
@@ -154,15 +152,15 @@ public class ParseUtils {
                                 return Objects.nonNull(nxt)
                                     && nxt.tokenType == TokenType.BRACKET_CLOSE;
                               });
+
                   case TokenType.NUM ->
                       Optional.of(new Number(tk.numValue * (negate ? -1.0 : 1.0)));
 
-                  case TokenType.VAR -> Optional.of(new Variable(tk.varValue));
+                  case TokenType.VAR ->
+                      Optional.of(new Variable(tk.varValue))
+                          .map((e) -> negate ? new Sub(new Number(0.0), e) : e);
 
-                  default ->
-                      throw new AssertionError(
-                          String.format(
-                              "parseExprPrattBP got unexpected token at the start: %s", tk));
+                  default -> Optional.empty();
                 });
   }
 
