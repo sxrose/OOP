@@ -2,8 +2,9 @@ package ru.nsu.sxrose1.expr_parse;
 
 import ru.nsu.sxrose1.expr.Expression;
 import ru.nsu.sxrose1.expr.Number;
+import ru.nsu.sxrose1.expr.Sub;
 
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class ParseUtils {
@@ -25,12 +26,12 @@ public class ParseUtils {
 
   private record Token(TokenType tokenType, double numValue, OpType opValue) {}
 
-  private static final Map<String, OpType> ops =
+  private static final Map<Character, OpType> ops =
       Map.of(
-          "+", OpType.SUM,
-          "-", OpType.SUB,
-          "*", OpType.MUL,
-          "/", OpType.DIV);
+          '+', OpType.SUM,
+          '-', OpType.SUB,
+          '*', OpType.MUL,
+          '/', OpType.DIV);
 
   private static final Map<OpType, IntPair> bindingPowers =
       Map.of(
@@ -55,9 +56,9 @@ public class ParseUtils {
     return buf.substring(0, i - 1);
   }
 
-  private static Stream<Token> tokenize(String exprStr) {
+  private static Optional<Queue<Token>> tokenize(String exprStr) {
 
-    Stream.Builder<Token> builder = Stream.builder();
+    Queue<Token> queue = new ArrayDeque<Token>();
 
     String buf = exprStr;
 
@@ -70,29 +71,71 @@ public class ParseUtils {
       if (Character.isDigit(buf.charAt(0))) {
         String num = tokenizeNumber(buf);
         buf = buf.substring(num.length());
-        builder.add(new Token(TokenType.NUM, Double.parseDouble(num), null));
+        queue.add(new Token(TokenType.NUM, Double.parseDouble(num), null));
         continue;
       }
 
       if (buf.charAt(0) == '(' || buf.charAt(0) == ')') {
         buf = buf.substring(1);
-        builder.add(
+        queue.add(
             new Token(
                 buf.charAt(0) == '(' ? TokenType.BRACKET_OPEN : TokenType.BRACKET_CLOSE,
                 0.0,
                 null));
       }
 
-      //      builder.add(new Token(Tok buf.substring(0, 0), TokenType.OP));
+      queue.add(new Token(TokenType.OP, 0.0, ops.get(buf.charAt(0))));
+
       buf = buf.substring(1);
     }
 
-    return builder.build();
+    return Optional.of(queue);
   }
 
-  private static Number parseNumber(Stream<Token> stream) {}
+  private static Number parseNumber(Queue<Token> stream) {}
 
-  private static Expression parseExprBP(Stream<Token> stream, int minBP) {}
+  private static Optional<Expression> prattParseLHS(Queue<Token> tokens) {
+    assert (!tokens.isEmpty());
+
+    var negOpt =
+        Optional.of(tokens.peek())
+            .flatMap(
+                (t) -> {
+                  if (t.tokenType == TokenType.OP && t.opValue == OpType.SUB) {
+                    tokens.poll();
+                    return Objects.isNull(tokens.peek()) ? Optional.empty() : Optional.of(true);
+                  }
+
+                  return Optional.of(false);
+                });
+
+    if (negOpt.isEmpty()) return Optional.empty();
+    boolean negate = negOpt.get();
+
+    Token tk = tokens.peek();
+    assert (Objects.nonNull(tk));
+
+    return switch (tk.tokenType) {
+      case TokenType.BRACKET_OPEN ->
+          Optional.of(tokens.poll())
+              .flatMap((_n) -> parseExprPrattBP(tokens, 0))
+              .map((e) -> negate ? new Sub(new Number(0.0), e) : e)
+              .filter(
+                  (_e) -> {
+                    var nxt = tokens.poll();
+                    return Objects.nonNull(nxt) && nxt.tokenType == TokenType.BRACKET_CLOSE;
+                  });
+      case TokenType.NUM -> Optional.of(new Number(tk.numValue * (negate ? -1.0 : 1.0)));
+      default ->
+          throw new AssertionError(
+              String.format("parseExprPrattBP got unexpected token at the start: %s", tk));
+    };
+  }
+
+  private static Optional<Expression> parseExprPrattBP(Queue<Token> tokens, int minBP) {
+    assert (!tokens.isEmpty());
+    var lhsOpt = prattParseLHS(tokens);
+  }
 
   private static Expression parseExpr(Stream<Token> stream) {}
 
