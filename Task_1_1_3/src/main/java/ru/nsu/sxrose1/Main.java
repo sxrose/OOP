@@ -14,7 +14,7 @@ public class Main {
 
     System.out.println(EvalUtils.eval(e1, Map.of()).get());
 
-    Expression e2 = ParseUtils.parse("xxx + 226 * 1337 / 0").get();
+    Expression e2 = ParseUtils.parse("-xxx + 226 * 1337 / 0").get();
 
     System.out.println(e2);
   }
