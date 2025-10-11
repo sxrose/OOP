@@ -11,6 +11,7 @@ public class ParseUtils {
 
   private enum TokenType {
     NUM,
+    VAR,
     OP,
     BRACKET_OPEN,
     BRACKET_CLOSE
@@ -23,7 +24,7 @@ public class ParseUtils {
     DIV
   }
 
-  private record Token(TokenType tokenType, double numValue, OpType opValue) {}
+  private record Token(TokenType tokenType, double numValue, String varValue, OpType opValue) {}
 
   private static final Map<Character, OpType> ops =
       Map.of(
@@ -55,14 +56,27 @@ public class ParseUtils {
 
   private static String tokenizeNumber(String buf) {
     int i = 0;
-    while (Character.isDigit(buf.charAt(i))) i++;
+    while (i < buf.length() && Character.isDigit(buf.charAt(i))) i++;
+
+    if (i >= buf.length()) return buf.substring(0, i);
 
     if (buf.charAt(i) == '.') {
       do i++;
-      while (Character.isDigit(buf.charAt(i)));
+      while (i < buf.length() && Character.isDigit(buf.charAt(i)));
     }
 
-    return buf.substring(0, i - 1);
+    return buf.substring(0, i);
+  }
+
+  private static String tokenizeVariable(String buf) {
+    int i = 0;
+
+    do i++;
+    while (i < buf.length()
+        && !ops.containsKey(buf.charAt(i))
+        && !Character.isWhitespace(buf.charAt(i)));
+
+    return buf.substring(0, i);
   }
 
   private static Optional<Queue<Token>> tokenize(String exprStr) {
@@ -80,7 +94,14 @@ public class ParseUtils {
       if (Character.isDigit(buf.charAt(0))) {
         String num = tokenizeNumber(buf);
         buf = buf.substring(num.length());
-        queue.add(new Token(TokenType.NUM, Double.parseDouble(num), null));
+        queue.add(new Token(TokenType.NUM, Double.parseDouble(num), null, null));
+        continue;
+      }
+
+      if (Character.isAlphabetic(buf.charAt(0))) {
+        String variable = tokenizeVariable(buf);
+        buf = buf.substring(variable.length());
+        queue.add(new Token(TokenType.VAR, 0.0, variable, null));
         continue;
       }
 
@@ -90,10 +111,11 @@ public class ParseUtils {
             new Token(
                 buf.charAt(0) == '(' ? TokenType.BRACKET_OPEN : TokenType.BRACKET_CLOSE,
                 0.0,
+                null,
                 null));
       }
 
-      queue.add(new Token(TokenType.OP, 0.0, ops.get(buf.charAt(0))));
+      queue.add(new Token(TokenType.OP, 0.0, null, ops.get(buf.charAt(0))));
 
       buf = buf.substring(1);
     }
@@ -119,24 +141,29 @@ public class ParseUtils {
     if (negOpt.isEmpty()) return Optional.empty();
     boolean negate = negOpt.get();
 
-    Token tk = tokens.peek();
-    assert (Objects.nonNull(tk));
+    return Optional.ofNullable(tokens.poll())
+        .flatMap(
+            (tk) ->
+                switch (tk.tokenType) {
+                  case TokenType.BRACKET_OPEN ->
+                      prattParse(tokens, 0)
+                          .map((e) -> negate ? new Sub(new Number(0.0), e) : e)
+                          .filter(
+                              (_e) -> {
+                                var nxt = tokens.poll();
+                                return Objects.nonNull(nxt)
+                                    && nxt.tokenType == TokenType.BRACKET_CLOSE;
+                              });
+                  case TokenType.NUM ->
+                      Optional.of(new Number(tk.numValue * (negate ? -1.0 : 1.0)));
 
-    return switch (tk.tokenType) {
-      case TokenType.BRACKET_OPEN ->
-          Optional.of(tokens.poll())
-              .flatMap((_n) -> prattParse(tokens, 0))
-              .map((e) -> negate ? new Sub(new Number(0.0), e) : e)
-              .filter(
-                  (_e) -> {
-                    var nxt = tokens.poll();
-                    return Objects.nonNull(nxt) && nxt.tokenType == TokenType.BRACKET_CLOSE;
-                  });
-      case TokenType.NUM -> Optional.of(new Number(tk.numValue * (negate ? -1.0 : 1.0)));
-      default ->
-          throw new AssertionError(
-              String.format("parseExprPrattBP got unexpected token at the start: %s", tk));
-    };
+                  case TokenType.VAR -> Optional.of(new Variable(tk.varValue));
+
+                  default ->
+                      throw new AssertionError(
+                          String.format(
+                              "parseExprPrattBP got unexpected token at the start: %s", tk));
+                });
   }
 
   private static Optional<Expression> prattParse(Queue<Token> tokens, int minBP) {
@@ -150,7 +177,7 @@ public class ParseUtils {
 
       var bpOpt =
           Optional.of(tk)
-              .filter((t) -> t.tokenType != TokenType.OP)
+              .filter((t) -> t.tokenType == TokenType.OP)
               .flatMap((t) -> Optional.ofNullable(bindingPowers.get(t.opValue)));
 
       if (bpOpt.isEmpty()) return Optional.empty();

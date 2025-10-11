@@ -2,8 +2,7 @@ package ru.nsu.sxrose1.expr;
 
 import java.util.function.BinaryOperator;
 
-public class Mul extends AssociativeBinaryExpression {
-
+public final class Mul extends AssociativeBinaryExpression {
   /**
    * @param lhs Left hand side of expression.
    * @param rhs Right hand side of expression.
@@ -28,5 +27,13 @@ public class Mul extends AssociativeBinaryExpression {
   @Override
   protected String repr() {
     return "*";
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Expression derivative(String variable) {
+    return new Add(
+        new Mul(lhs.clone(), rhs.derivative(variable)),
+        new Mul(lhs.derivative(variable), rhs.clone()));
   }
 }

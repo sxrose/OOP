@@ -1,5 +1,9 @@
 package ru.nsu.sxrose1.expr;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Objects;
+
 public abstract class AssociativeBinaryExpression extends BinaryExpression {
   /**
    * @param lhs Left hand side of expression.
@@ -20,6 +24,12 @@ public abstract class AssociativeBinaryExpression extends BinaryExpression {
     if (this.lhs.equals(otherAssoc.rhs)) return this.rhs.equals(otherAssoc.lhs);
 
     return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return Objects.hash(new HashSet<Expression>(Arrays.asList(lhs, rhs)), repr());
   }
 
   /** {@inheritDoc} */

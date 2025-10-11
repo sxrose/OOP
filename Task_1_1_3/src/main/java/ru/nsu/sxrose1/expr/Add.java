@@ -28,4 +28,10 @@ public final class Add extends AssociativeBinaryExpression {
   protected String repr() {
     return "+";
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public Expression derivative(String variable) {
+    return new Add(lhs.derivative(variable), rhs.derivative(variable));
+  }
 }

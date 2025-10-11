@@ -1,6 +1,8 @@
 package ru.nsu.sxrose1.expr;
 
-public class Number extends Expression {
+import java.util.Objects;
+
+public final class Number extends Expression {
   public double value;
 
   /**
@@ -24,7 +26,19 @@ public class Number extends Expression {
 
   /** {@inheritDoc} */
   @Override
+  public int hashCode() {
+    return Objects.hashCode(value);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public Expression simplify() {
     return this;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Expression derivative(String variable) {
+    return new Number(0.0);
   }
 }

@@ -1,5 +1,6 @@
 package ru.nsu.sxrose1.expr;
 
+import java.util.Objects;
 import java.util.function.BinaryOperator;
 
 public abstract class BinaryExpression extends Expression {
@@ -21,6 +22,12 @@ public abstract class BinaryExpression extends Expression {
     return this.getClass() == other.getClass()
         && this.lhs.equals(((BinaryExpression) other).lhs)
         && this.rhs.equals(((BinaryExpression) other).rhs);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return Objects.hash(lhs, rhs, repr());
   }
 
   /**
