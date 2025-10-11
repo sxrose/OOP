@@ -1,8 +1,7 @@
 package ru.nsu.sxrose1.expr_parse;
 
-import ru.nsu.sxrose1.expr.Expression;
+import ru.nsu.sxrose1.expr.*;
 import ru.nsu.sxrose1.expr.Number;
-import ru.nsu.sxrose1.expr.Sub;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -43,6 +42,16 @@ public class ParseUtils {
           new IntPair(3, 4),
           OpType.DIV,
           new IntPair(3, 4));
+
+  private static BinaryExpression binaryExpressionFromOp(
+      Expression lhs, Expression rhs, OpType op) {
+    return switch (op) {
+      case OpType.SUM -> new Add(lhs, rhs);
+      case OpType.SUB -> new Sub(lhs, rhs);
+      case OpType.MUL -> new Mul(lhs, rhs);
+      case OpType.DIV -> new Div(lhs, rhs);
+    };
+  }
 
   private static String tokenizeNumber(String buf) {
     int i = 0;
@@ -92,8 +101,6 @@ public class ParseUtils {
     return Optional.of(queue);
   }
 
-  private static Number parseNumber(Queue<Token> stream) {}
-
   private static Optional<Expression> prattParseLHS(Queue<Token> tokens) {
     assert (!tokens.isEmpty());
 
@@ -118,7 +125,7 @@ public class ParseUtils {
     return switch (tk.tokenType) {
       case TokenType.BRACKET_OPEN ->
           Optional.of(tokens.poll())
-              .flatMap((_n) -> parseExprPrattBP(tokens, 0))
+              .flatMap((_n) -> prattParse(tokens, 0))
               .map((e) -> negate ? new Sub(new Number(0.0), e) : e)
               .filter(
                   (_e) -> {
@@ -132,12 +139,47 @@ public class ParseUtils {
     };
   }
 
-  private static Optional<Expression> parseExprPrattBP(Queue<Token> tokens, int minBP) {
+  private static Optional<Expression> prattParse(Queue<Token> tokens, int minBP) {
     assert (!tokens.isEmpty());
     var lhsOpt = prattParseLHS(tokens);
+    if (lhsOpt.isEmpty()) return Optional.empty();
+
+    while (true) {
+      Token tk = tokens.peek();
+      if (Objects.isNull(tk)) break;
+
+      var bpOpt =
+          Optional.of(tk)
+              .filter((t) -> t.tokenType != TokenType.OP)
+              .flatMap((t) -> Optional.ofNullable(bindingPowers.get(t.opValue)));
+
+      if (bpOpt.isEmpty()) return Optional.empty();
+      IntPair bp = bpOpt.get();
+
+      if (bp.left < minBP) break;
+
+      tokens.poll();
+
+      lhsOpt =
+          lhsOpt.flatMap(
+              (lhs) ->
+                  prattParse(tokens, bp.right)
+                      .map((rhs) -> binaryExpressionFromOp(lhs, rhs, tk.opValue)));
+    }
+
+    return lhsOpt;
   }
 
-  private static Expression parseExpr(Stream<Token> stream) {}
+  /**
+   * Parses expression from String.
+   *
+   * @param exprStr String that contains expression to parse.
+   * @return parsed expression on successful parsing, none otherwise.
+   */
+  public static Optional<Expression> parse(String exprStr) {
+    assert (ops.size() == OpType.values().length);
+    assert (bindingPowers.size() == OpType.values().length);
 
-  public static Expression parse(String exprStr) {}
+    return tokenize(exprStr).flatMap((tokens) -> prattParse(tokens, 0));
+  }
 }
