@@ -1,4 +1,4 @@
-package ru.nsu.sxrose1.expr_parse;
+package ru.nsu.sxrose1.expr.parse;
 
 import ru.nsu.sxrose1.expr.*;
 import ru.nsu.sxrose1.expr.Number;
