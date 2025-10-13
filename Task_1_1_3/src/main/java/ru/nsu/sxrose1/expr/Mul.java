@@ -1,6 +1,5 @@
 package ru.nsu.sxrose1.expr;
 
-import java.util.Map;
 import java.util.function.BinaryOperator;
 
 public final class Mul extends AssociativeBinaryExpression {
@@ -26,7 +25,7 @@ public final class Mul extends AssociativeBinaryExpression {
 
   /** {@inheritDoc} */
   @Override
-  protected String repr() {
+  protected String opRepr() {
     return "*";
   }
 

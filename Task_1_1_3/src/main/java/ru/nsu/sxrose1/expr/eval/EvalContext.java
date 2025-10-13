@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EvalContext extends HashMap<String, Double> {
+  /**
+   * @param mapping Map consisting of mappings for variables.
+   */
   public EvalContext(Map<String, Double> mapping) {
     super(mapping);
   }

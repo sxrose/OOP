@@ -7,7 +7,7 @@ public abstract class Expression implements Cloneable {
    * associativity.
    *
    * @param other the expression with which to compare
-   * @return {@code true}, if {@code object} is @{code Expression} and is equal to this one.
+   * @return true, if object is Expression and is equal to this one.
    * @see Expression#equals(Object)
    */
   public abstract boolean exprEquals(Expression other);
@@ -18,7 +18,7 @@ public abstract class Expression implements Cloneable {
    * to associativity.
    *
    * @param other the reference object with which to compare
-   * @return {@code true}, if {@code object} is @{code Expression} and is equal to this one.
+   * @return true, if object is Expression and is equal to this one.
    * @see Expression#exprEquals(Expression)
    */
   @Override
@@ -40,17 +40,10 @@ public abstract class Expression implements Cloneable {
   @Override
   public abstract int hashCode();
 
-  /** Prints out representation of expression to standard output. */
-  public final void print() {
-    System.out.print(this.toString());
-  }
-
   /**
-   * Simplifies expression in arithmetic sense. Must return {@code this} reference if no
-   * simplification is possible.
+   * Simplifies expression in arithmetic sense. Creates new Expression distinct from this.
    *
-   * @return new simplified {@code Expression} if simplification took place, {@code this} reference
-   *     otherwise.
+   * @return new simplified Expression.
    */
   public abstract Expression simplify();
 
@@ -65,7 +58,7 @@ public abstract class Expression implements Cloneable {
   /**
    * Performs shallow copy of Expression.
    *
-   * @return shallow copy of {@code this}.
+   * @return shallow copy of this.
    */
   public final Expression shallowCopy() {
     try {
@@ -78,7 +71,7 @@ public abstract class Expression implements Cloneable {
   /**
    * Performs deep copy of Expression.
    *
-   * @return deep copy of {@code this}.
+   * @return deep copy of this.
    */
   @Override
   public Expression clone() {

@@ -29,7 +29,7 @@ public abstract class AssociativeBinaryExpression extends BinaryExpression {
   /** {@inheritDoc} */
   @Override
   public int hashCode() {
-    return Objects.hash(new HashSet<Expression>(Arrays.asList(lhs, rhs)), repr());
+    return Objects.hash(new HashSet<Expression>(Arrays.asList(lhs, rhs)), opRepr());
   }
 
   /** {@inheritDoc} */

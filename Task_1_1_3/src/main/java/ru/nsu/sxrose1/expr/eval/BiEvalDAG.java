@@ -1,7 +1,5 @@
 package ru.nsu.sxrose1.expr.eval;
 
-import ru.nsu.sxrose1.expr.BinaryExpression;
-
 import java.util.Optional;
 import java.util.function.BinaryOperator;
 

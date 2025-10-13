@@ -33,7 +33,7 @@ public final class Div extends BinaryExpression {
 
   /** {@inheritDoc} */
   @Override
-  protected String repr() {
+  protected String opRepr() {
     return "/";
   }
 
