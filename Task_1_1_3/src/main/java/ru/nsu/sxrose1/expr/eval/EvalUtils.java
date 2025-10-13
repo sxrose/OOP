@@ -1,14 +1,13 @@
 package ru.nsu.sxrose1.expr.eval;
 
-import ru.nsu.sxrose1.expr.BinaryExpression;
-import ru.nsu.sxrose1.expr.Expression;
-import ru.nsu.sxrose1.expr.Number;
-import ru.nsu.sxrose1.expr.Variable;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import ru.nsu.sxrose1.expr.BinaryExpression;
+import ru.nsu.sxrose1.expr.Expression;
+import ru.nsu.sxrose1.expr.Number;
+import ru.nsu.sxrose1.expr.Variable;
 
 public class EvalUtils {
 
@@ -40,7 +39,7 @@ public class EvalUtils {
   }
 
   /**
-   * Compiles Expression {@code e} to EvalDAG.
+   * Compiles Expression to EvalDAG.
    *
    * @param e Expression to compile.
    * @param compileOpts compilation options, see EvalUtils.COMPILE_OPT_*.
@@ -55,7 +54,7 @@ public class EvalUtils {
   }
 
   /**
-   * Evaluates Expression {@code e}.
+   * Evaluates Expression.
    *
    * @param e Expression to evaluate.
    * @param mapping mappings of variables.

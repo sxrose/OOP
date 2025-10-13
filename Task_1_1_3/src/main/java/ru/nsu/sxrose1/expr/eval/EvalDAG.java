@@ -8,6 +8,13 @@ public abstract class EvalDAG {
 
   protected abstract Optional<Double> evalImpl(EvalContext ctx);
 
+  /**
+   * Evaluate DAG with respect to context.
+   *
+   * @param ctx evaluation context.
+   * @return evaluation result if context's mapping is complete with respect to expression that DAG
+   *     constitute, empty otherwise.
+   */
   public final Optional<Double> eval(EvalContext ctx) {
     if (!evaluated) {
       evaluatedValue = evalImpl(ctx);

@@ -34,7 +34,7 @@ public final class Sub extends BinaryExpression {
 
   /** {@inheritDoc} */
   @Override
-  protected String repr() {
+  protected String opRepr() {
     return "-";
   }
 

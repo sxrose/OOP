@@ -33,14 +33,14 @@ public abstract class BinaryExpression extends Expression {
   /** {@inheritDoc} */
   @Override
   public int hashCode() {
-    return Objects.hash(lhs, rhs, repr());
+    return Objects.hash(lhs, rhs, opRepr());
   }
 
   /**
-   * Returns {@code true} if Expression is associative. Default is {@code false} for {@code
-   * BinaryExpression}, redefined to {@code true} in {@code AssociativeBinaryExpression}
+   * Returns true if Expression is associative. Default is false for BinaryExpression, redefined to
+   * true in AssociativeBinaryExpression.
    *
-   * @return {@code true} if Expression is associative, otherwise @{code false}.
+   * @return true if Expression is associative, false otherwise.
    */
   public boolean isAssociative() {
     return false;
@@ -52,9 +52,9 @@ public abstract class BinaryExpression extends Expression {
   public abstract BinaryOperator<Double> operator();
 
   /**
-   * Simplifies {@code this.lhs} and {@code this.rhs} inplace. No new nodes are created.
+   * Simplifies lhs and rhs in-place.
    *
-   * @return simplified expression or {@code this}.
+   * @return simplified expression.
    */
   protected abstract Expression simplifyCancelOutInplace();
 
@@ -85,12 +85,12 @@ public abstract class BinaryExpression extends Expression {
   /**
    * @return String representation of operation's sign.
    */
-  protected abstract String repr();
+  protected abstract String opRepr();
 
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return "(" + String.join(" " + repr() + " ", lhs.toString(), rhs.toString()) + ")";
+    return "(" + String.join(" " + opRepr() + " ", lhs.toString(), rhs.toString()) + ")";
   }
 
   /** {@inheritDoc} */

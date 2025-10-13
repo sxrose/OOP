@@ -1,40 +1,28 @@
 package ru.nsu.sxrose1.expr.parse;
 
-import ru.nsu.sxrose1.expr.*;
+import java.util.ArrayDeque;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Queue;
+import ru.nsu.sxrose1.expr.Add;
+import ru.nsu.sxrose1.expr.BinaryExpression;
+import ru.nsu.sxrose1.expr.Div;
+import ru.nsu.sxrose1.expr.Expression;
+import ru.nsu.sxrose1.expr.Mul;
 import ru.nsu.sxrose1.expr.Number;
-
-import java.util.*;
+import ru.nsu.sxrose1.expr.Sub;
+import ru.nsu.sxrose1.expr.Variable;
 
 public class ParseUtils {
-  private record IntPair(int left, int right) {}
-
-  private enum TokenType {
-    NUM,
-    VAR,
-    OP,
-    BRACKET_OPEN,
-    BRACKET_CLOSE
-  }
-
-  private enum OpType {
-    SUM,
-    SUB,
-    MUL,
-    DIV
-  }
-
-  private record Token(TokenType tokenType, double numValue, String varValue, OpType opValue) {}
-
   private static final Map<Character, TokenType> brackets =
       Map.of('(', TokenType.BRACKET_OPEN, ')', TokenType.BRACKET_CLOSE);
-
   private static final Map<Character, OpType> ops =
       Map.of(
           '+', OpType.SUM,
           '-', OpType.SUB,
           '*', OpType.MUL,
           '/', OpType.DIV);
-
   private static final Map<OpType, IntPair> bindingPowers =
       Map.of(
           OpType.SUM,
@@ -47,7 +35,7 @@ public class ParseUtils {
           new IntPair(3, 4));
 
   private static BinaryExpression binaryExpressionFromOp(
-      Expression lhs, Expression rhs, OpType op) {
+          Expression lhs, Expression rhs, OpType op) {
     return switch (op) {
       case OpType.SUM -> new Add(lhs, rhs);
       case OpType.SUB -> new Sub(lhs, rhs);
@@ -207,4 +195,23 @@ public class ParseUtils {
 
     return tokenize(exprStr).flatMap((tokens) -> prattParse(tokens, 0));
   }
+
+  private enum TokenType {
+    NUM,
+    VAR,
+    OP,
+    BRACKET_OPEN,
+    BRACKET_CLOSE
+  }
+
+  private enum OpType {
+    SUM,
+    SUB,
+    MUL,
+    DIV
+  }
+
+  private record IntPair(int left, int right) {}
+
+  private record Token(TokenType tokenType, double numValue, String varValue, OpType opValue) {}
 }

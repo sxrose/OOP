@@ -25,7 +25,7 @@ public final class Add extends AssociativeBinaryExpression {
 
   /** {@inheritDoc} */
   @Override
-  protected String repr() {
+  protected String opRepr() {
     return "+";
   }
 

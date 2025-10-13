@@ -2,8 +2,13 @@ package ru.nsu.sxrose1.exprtests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.nsu.sxrose1.expr.*;
+import ru.nsu.sxrose1.expr.Add;
+import ru.nsu.sxrose1.expr.Div;
+import ru.nsu.sxrose1.expr.Expression;
+import ru.nsu.sxrose1.expr.Mul;
 import ru.nsu.sxrose1.expr.Number;
+import ru.nsu.sxrose1.expr.Sub;
+import ru.nsu.sxrose1.expr.Variable;
 import ru.nsu.sxrose1.expr.eval.EvalContext;
 import ru.nsu.sxrose1.expr.eval.EvalDAG;
 import ru.nsu.sxrose1.expr.eval.EvalUtils;
@@ -112,6 +117,14 @@ public class ExprTests {
     EvalDAG dag = EvalUtils.compileDAG(e2, EvalUtils.COMPILE_OPT_SIMPLIFY);
 
     Assertions.assertEquals(Optional.of(0.5d), dag.eval(new EvalContext(Map.of("x", 2.0d))));
+  }
+
+  @Test
+  void derivativeTest() {
+    Assertions.assertEquals(new Number(1.0), new Variable("x").derivative("x"));
+    Assertions.assertEquals(new Number(0.0), new Variable("x").derivative("y"));
+
+    Assertions.assertEquals(new Number(0.0), new Number(42.0).derivative("lol"));
   }
 
   @Test
