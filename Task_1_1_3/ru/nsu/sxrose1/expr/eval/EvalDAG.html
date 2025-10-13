@@ -124,7 +124,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#eval(ru.nsu.sxrose1.expr.eval.EvalContext)" class="member-name-link">eval</a><wbr>(<a href="EvalContext.html" title="class in ru.nsu.sxrose1.expr.eval">EvalContext</a>&nbsp;ctx)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Evaluate DAG with respect to context.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#evalImpl(ru.nsu.sxrose1.expr.eval.EvalContext)" class="member-name-link">evalImpl</a><wbr>(<a href="EvalContext.html" title="class in ru.nsu.sxrose1.expr.eval">EvalContext</a>&nbsp;ctx)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -169,6 +171,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="eval(ru.nsu.sxrose1.expr.eval.EvalContext)">
 <h3>eval</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;</span>&nbsp;<span class="element-name">eval</span><wbr><span class="parameters">(<a href="EvalContext.html" title="class in ru.nsu.sxrose1.expr.eval">EvalContext</a>&nbsp;ctx)</span></div>
+<div class="block">Evaluate DAG with respect to context.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ctx</code> - evaluation context.</dd>
+<dt>Returns:</dt>
+<dd>evaluation result if context's mapping is complete with respect to expression that DAG
+     constitute, empty otherwise.</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -154,22 +154,22 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAssociative()" class="member-name-link">isAssociative</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns <code>true</code> if Expression is associative.</div>
+<div class="block">Returns true if Expression is associative.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="Expression.html" title="class in ru.nsu.sxrose1.expr">Expression</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#simplifyCancelOutInplace()" class="member-name-link">simplifyCancelOutInplace</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Simplifies <code>this.lhs</code> and <code>this.rhs</code> inplace.</div>
+<div class="block">Simplifies lhs and rhs in-place.</div>
 </div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-ru.nsu.sxrose1.expr.BinaryExpression">Methods inherited from class&nbsp;ru.nsu.sxrose1.expr.<a href="BinaryExpression.html" title="class in ru.nsu.sxrose1.expr">BinaryExpression</a></h3>
-<code><a href="BinaryExpression.html#clone()">clone</a>, <a href="BinaryExpression.html#height()">height</a>, <a href="BinaryExpression.html#operator()">operator</a>, <a href="BinaryExpression.html#repr()">repr</a>, <a href="BinaryExpression.html#simplify()">simplify</a>, <a href="BinaryExpression.html#toString()">toString</a></code></div>
+<code><a href="BinaryExpression.html#clone()">clone</a>, <a href="BinaryExpression.html#height()">height</a>, <a href="BinaryExpression.html#operator()">operator</a>, <a href="BinaryExpression.html#opRepr()">opRepr</a>, <a href="BinaryExpression.html#simplify()">simplify</a>, <a href="BinaryExpression.html#toString()">toString</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-ru.nsu.sxrose1.expr.Expression">Methods inherited from class&nbsp;ru.nsu.sxrose1.expr.<a href="Expression.html" title="class in ru.nsu.sxrose1.expr">Expression</a></h3>
-<code><a href="Expression.html#derivative(java.lang.String)">derivative</a>, <a href="Expression.html#equals(java.lang.Object)">equals</a>, <a href="Expression.html#print()">print</a>, <a href="Expression.html#shallowCopy()">shallowCopy</a></code></div>
+<code><a href="Expression.html#derivative(java.lang.String)">derivative</a>, <a href="Expression.html#equals(java.lang.Object)">equals</a>, <a href="Expression.html#shallowCopy()">shallowCopy</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -217,7 +217,7 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>other</code> - the expression with which to compare</dd>
 <dt>Returns:</dt>
-<dd><code>true</code>, if <code>object</code> is @{code Expression} and is equal to this one.</dd>
+<dd>true, if object is Expression and is equal to this one.</dd>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
@@ -241,13 +241,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isAssociative()">
 <h3>isAssociative</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAssociative</span>()</div>
-<div class="block">Returns <code>true</code> if Expression is associative. Default is <code>false</code> for <code>
- BinaryExpression</code>, redefined to <code>true</code> in <code>AssociativeBinaryExpression</code></div>
+<div class="block">Returns true if Expression is associative. Default is false for BinaryExpression, redefined to
+ true in AssociativeBinaryExpression.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="BinaryExpression.html#isAssociative()">isAssociative</a></code>&nbsp;in class&nbsp;<code><a href="BinaryExpression.html" title="class in ru.nsu.sxrose1.expr">BinaryExpression</a></code></dd>
 <dt>Returns:</dt>
-<dd><code>true</code> if Expression is associative, otherwise @{code false}.</dd>
+<dd>true if Expression is associative, false otherwise.</dd>
 </dl>
 </section>
 </li>
@@ -265,12 +265,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="simplifyCancelOutInplace()">
 <h3>simplifyCancelOutInplace</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="Expression.html" title="class in ru.nsu.sxrose1.expr">Expression</a></span>&nbsp;<span class="element-name">simplifyCancelOutInplace</span>()</div>
-<div class="block">Simplifies <code>this.lhs</code> and <code>this.rhs</code> inplace. No new nodes are created.</div>
+<div class="block">Simplifies lhs and rhs in-place.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="BinaryExpression.html#simplifyCancelOutInplace()">simplifyCancelOutInplace</a></code>&nbsp;in class&nbsp;<code><a href="BinaryExpression.html" title="class in ru.nsu.sxrose1.expr">BinaryExpression</a></code></dd>
 <dt>Returns:</dt>
-<dd>simplified expression or <code>this</code>.</dd>
+<dd>simplified expression.</dd>
 </dl>
 </section>
 </li>

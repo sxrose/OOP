@@ -170,7 +170,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-ru.nsu.sxrose1.expr.Expression">Methods inherited from class&nbsp;ru.nsu.sxrose1.expr.<a href="Expression.html" title="class in ru.nsu.sxrose1.expr">Expression</a></h3>
-<code><a href="Expression.html#clone()">clone</a>, <a href="Expression.html#equals(java.lang.Object)">equals</a>, <a href="Expression.html#print()">print</a>, <a href="Expression.html#shallowCopy()">shallowCopy</a></code></div>
+<code><a href="Expression.html#clone()">clone</a>, <a href="Expression.html#equals(java.lang.Object)">equals</a>, <a href="Expression.html#shallowCopy()">shallowCopy</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -230,7 +230,7 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>other</code> - the expression with which to compare</dd>
 <dt>Returns:</dt>
-<dd><code>true</code>, if <code>object</code> is @{code Expression} and is equal to this one.</dd>
+<dd>true, if object is Expression and is equal to this one.</dd>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
@@ -277,14 +277,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="simplify()">
 <h3>simplify</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Expression.html" title="class in ru.nsu.sxrose1.expr">Expression</a></span>&nbsp;<span class="element-name">simplify</span>()</div>
-<div class="block">Simplifies expression in arithmetic sense. Must return <code>this</code> reference if no
- simplification is possible.</div>
+<div class="block">Simplifies expression in arithmetic sense. Creates new Expression distinct from this.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Expression.html#simplify()">simplify</a></code>&nbsp;in class&nbsp;<code><a href="Expression.html" title="class in ru.nsu.sxrose1.expr">Expression</a></code></dd>
 <dt>Returns:</dt>
-<dd>new simplified <code>Expression</code> if simplification took place, <code>this</code> reference
-     otherwise.</dd>
+<dd>new simplified Expression.</dd>
 </dl>
 </section>
 </li>
