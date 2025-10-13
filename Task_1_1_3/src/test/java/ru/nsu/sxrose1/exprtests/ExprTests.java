@@ -1,5 +1,7 @@
 package ru.nsu.sxrose1.exprtests;
 
+import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.nsu.sxrose1.expr.Add;
@@ -13,9 +15,6 @@ import ru.nsu.sxrose1.expr.eval.EvalContext;
 import ru.nsu.sxrose1.expr.eval.EvalDAG;
 import ru.nsu.sxrose1.expr.eval.EvalUtils;
 import ru.nsu.sxrose1.expr.parse.ParseUtils;
-
-import java.util.Map;
-import java.util.Optional;
 
 public class ExprTests {
   @Test
@@ -125,6 +124,26 @@ public class ExprTests {
     Assertions.assertEquals(new Number(0.0), new Variable("x").derivative("y"));
 
     Assertions.assertEquals(new Number(0.0), new Number(42.0).derivative("lol"));
+
+    Assertions.assertEquals(
+        EvalUtils.eval(
+            new Add(new Mul(new Number(20.0), new Variable("x")), new Number(1.0)),
+            Map.of("x", 3.0d)),
+        EvalUtils.eval(
+            new Add(
+                    new Sub(
+                        new Div(
+                            new Mul(
+                                new Mul(
+                                    new Mul(new Variable("x"), new Variable("x")),
+                                    new Number(12.0)),
+                                new Variable("x")),
+                            new Variable("x")),
+                        new Mul(new Mul(new Number(2.0), new Variable("x")), new Variable("x"))),
+                    new Variable("x"))
+                .derivative("x")
+                .simplify(),
+            Map.of("x", 3.0d)));
   }
 
   @Test
