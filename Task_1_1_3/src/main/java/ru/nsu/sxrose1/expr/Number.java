@@ -20,6 +20,12 @@ public final class Number extends Expression {
 
   /** {@inheritDoc} */
   @Override
+  public int height() {
+    return 1;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public String toString() {
     return Double.toString(value);
   }

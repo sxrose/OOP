@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EvalContext extends HashMap<String, Double> {
-  EvalContext(Map<String, Double> mapping) {
+  public EvalContext(Map<String, Double> mapping) {
     super(mapping);
   }
 }
