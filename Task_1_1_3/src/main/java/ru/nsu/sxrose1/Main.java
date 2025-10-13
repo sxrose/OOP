@@ -9,13 +9,7 @@ import java.util.Map;
 
 public class Main {
   public static void main(String[] args) {
-
-    Expression e1 = ParseUtils.parse("2").get();
-
-    System.out.println(EvalUtils.eval(e1, Map.of()).get());
-
-    Expression e2 = ParseUtils.parse("-xxx + 226 * 1337 / 0").get();
-
-    System.out.println(e2);
+    ParseUtils.parse(System.in.toString())
+        .ifPresentOrElse(System.out::println, () -> System.out.println("Parse error."));
   }
 }

@@ -4,7 +4,6 @@ import ru.nsu.sxrose1.expr.*;
 import ru.nsu.sxrose1.expr.Number;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 public class ParseUtils {
   private record IntPair(int left, int right) {}
@@ -25,6 +24,9 @@ public class ParseUtils {
   }
 
   private record Token(TokenType tokenType, double numValue, String varValue, OpType opValue) {}
+
+  private static final Map<Character, TokenType> brackets =
+      Map.of('(', TokenType.BRACKET_OPEN, ')', TokenType.BRACKET_CLOSE);
 
   private static final Map<Character, OpType> ops =
       Map.of(
@@ -73,15 +75,16 @@ public class ParseUtils {
 
     do i++;
     while (i < buf.length()
+        && !Character.isWhitespace(buf.charAt(i))
         && !ops.containsKey(buf.charAt(i))
-        && !Character.isWhitespace(buf.charAt(i)));
+        && !brackets.containsKey(buf.charAt(i)));
 
     return buf.substring(0, i);
   }
 
   private static Optional<Queue<Token>> tokenize(String exprStr) {
 
-    Queue<Token> queue = new ArrayDeque<Token>();
+    Queue<Token> queue = new ArrayDeque<>();
 
     String buf = exprStr;
 
@@ -105,14 +108,11 @@ public class ParseUtils {
         continue;
       }
 
-      if (buf.charAt(0) == '(' || buf.charAt(0) == ')') {
+      if (brackets.containsKey(buf.charAt(0))) {
+        queue.add(new Token(brackets.get(buf.charAt(0)), 0.0, null, null));
+
         buf = buf.substring(1);
-        queue.add(
-            new Token(
-                buf.charAt(0) == '(' ? TokenType.BRACKET_OPEN : TokenType.BRACKET_CLOSE,
-                0.0,
-                null,
-                null));
+        continue;
       }
 
       queue.add(new Token(TokenType.OP, 0.0, null, ops.get(buf.charAt(0))));
@@ -165,20 +165,20 @@ public class ParseUtils {
   }
 
   private static Optional<Expression> prattParse(Queue<Token> tokens, int minBP) {
-    assert (!tokens.isEmpty());
+    if (tokens.isEmpty()) return Optional.empty();
+
     var lhsOpt = prattParseLHS(tokens);
     if (lhsOpt.isEmpty()) return Optional.empty();
 
     while (true) {
       Token tk = tokens.peek();
-      if (Objects.isNull(tk)) break;
 
       var bpOpt =
-          Optional.of(tk)
+          Optional.ofNullable(tk)
               .filter((t) -> t.tokenType == TokenType.OP)
               .flatMap((t) -> Optional.ofNullable(bindingPowers.get(t.opValue)));
 
-      if (bpOpt.isEmpty()) return Optional.empty();
+      if (bpOpt.isEmpty()) break;
       IntPair bp = bpOpt.get();
 
       if (bp.left < minBP) break;

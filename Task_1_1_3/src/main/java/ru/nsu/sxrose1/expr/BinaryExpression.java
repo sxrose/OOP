@@ -26,6 +26,12 @@ public abstract class BinaryExpression extends Expression {
 
   /** {@inheritDoc} */
   @Override
+  public int height() {
+    return Integer.max(lhs.height(), rhs.height()) + 1;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public int hashCode() {
     return Objects.hash(lhs, rhs, repr());
   }

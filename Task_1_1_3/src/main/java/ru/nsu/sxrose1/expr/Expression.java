@@ -1,8 +1,6 @@
 package ru.nsu.sxrose1.expr;
 
 public abstract class Expression implements Cloneable {
-  public static int SIMPLIFICATION_MAX_ITERATIONS = 2048;
-
   /**
    * Indicates whether some other expression is equal to this one. Two expressions are the same if
    * and only if they are the same object or structurally constitute the same expression tree up to
@@ -29,6 +27,11 @@ public abstract class Expression implements Cloneable {
     return (other instanceof Expression) && this.exprEquals((Expression) other);
   }
 
+  /**
+   * @return height of expression tree.
+   */
+  public abstract int height();
+
   /** Returns a string representation of the expression. */
   @Override
   public abstract String toString();
@@ -50,25 +53,6 @@ public abstract class Expression implements Cloneable {
    *     otherwise.
    */
   public abstract Expression simplify();
-
-  /**
-   * Creates simplified expression from {@code expr}, performing simplification until fixed-point
-   * reaches or @{code Expression.SIMPLIFICATION_MAX_ITERATIONS} iterations exceeds.
-   *
-   * @see Expression::simplify.
-   * @param expr Expression to simplify.
-   * @return simplified expression.
-   */
-  public static Expression simplifyFixedPoint(Expression expr) {
-    Expression simplifed = expr.clone();
-    for (int i = 0; i < Expression.SIMPLIFICATION_MAX_ITERATIONS; i++) {
-      Expression nextSimplified = simplifed.simplify();
-      if (simplifed.exprEquals(nextSimplified)) break;
-      simplifed = nextSimplified;
-    }
-
-    return simplifed;
-  }
 
   /**
    * Make new expression representing derivative with respect to some variable.

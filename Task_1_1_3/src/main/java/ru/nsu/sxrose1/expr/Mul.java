@@ -1,5 +1,6 @@
 package ru.nsu.sxrose1.expr;
 
+import java.util.Map;
 import java.util.function.BinaryOperator;
 
 public final class Mul extends AssociativeBinaryExpression {
@@ -27,6 +28,24 @@ public final class Mul extends AssociativeBinaryExpression {
   @Override
   protected String repr() {
     return "*";
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected Expression simplifyCancelOutInplace() {
+    Expression simpl = super.simplifyCancelOutInplace();
+
+    if (simpl instanceof Mul m) {
+      if (m.lhs instanceof Number) {
+        if (((Number) m.lhs).value == 0.0) return m.lhs;
+      }
+
+      if (m.rhs instanceof Number) {
+        if (((Number) m.rhs).value == 0.0) return m.rhs;
+      }
+    }
+
+    return simpl;
   }
 
   /** {@inheritDoc} */

@@ -48,7 +48,7 @@ public class EvalUtils {
    */
   public static EvalDAG compileDAG(Expression e, int compileOpts) {
     if ((compileOpts & COMPILE_OPT_SIMPLIFY) != 0) {
-      e = Expression.simplifyFixedPoint(e);
+      e = e.simplify();
     }
 
     return compileDAGImpl(e, new HashMap<>());
