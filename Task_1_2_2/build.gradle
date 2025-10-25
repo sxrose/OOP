@@ -1,5 +1,12 @@
 plugins {
     id 'java'
+    id 'jacoco'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 group = 'ru.nsu.sxrose1'
