@@ -1,9 +1,11 @@
 package ru.nsu.sxrose1.maps;
 
-import ru.nsu.sxrose1.utils.PrimesUtils;
-
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import ru.nsu.sxrose1.utils.PrimesUtils;
 
 public class HashMap<K, E> implements Map<K, E> {
   static final int MIN_CAPACITY = 31;
@@ -34,7 +36,8 @@ public class HashMap<K, E> implements Map<K, E> {
   }
 
   private int index(Object key) {
-    return Integer.signum(key.hashCode()) % capacity();
+    int code = key.hashCode();
+    return (Integer.signum(code) * code) % capacity();
   }
 
   private int probe(int ind) {
@@ -84,6 +87,7 @@ public class HashMap<K, E> implements Map<K, E> {
   private void rehash(int newCap) {
     Slot[] oldData = data;
     data = new Slot[newCap];
+    for (int i = 0; i < newCap; i++) data[i] = new Slot(SlotTag.EMPTY, null, null);
     load = 0;
     deleted = 0;
 
@@ -137,8 +141,37 @@ public class HashMap<K, E> implements Map<K, E> {
   /** {@inheritDoc} */
   @Override
   public Optional<Map<K, E>> delete(K key) {
-    if (loadFactor() <= MIN_LOAD_FACTOR)
+    if (capacity() > MIN_CAPACITY && loadFactor() <= MIN_LOAD_FACTOR)
       rehash(updatedCapacity(Integer.max(MIN_CAPACITY, (int) (capacity() * MIN_LOAD_FACTOR))));
     return deleteNoResize(key);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Set<Entry<K, E>> entries() {
+    return Arrays.stream(data)
+        .filter((s) -> s.tag == SlotTag.OCCUPIED)
+        .map(
+            (s) -> {
+              @SuppressWarnings("unchecked")
+              K key = (K) Objects.requireNonNull(s.key);
+              @SuppressWarnings("unchecked")
+              E elem = (E) Objects.requireNonNull(s.element);
+
+              return new Map.Entry<>(key, elem);
+            })
+        .collect(Collectors.toSet());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(entries());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean equals(Object other) {
+    return other instanceof Map && ((Map<?, ?>) other).entries().equals(this.entries());
   }
 }

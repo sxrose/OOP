@@ -104,10 +104,22 @@ public class PrimesUtils {
         7883, 7901, 7907, 7919
   };
 
+  /**
+   * Checks if provided number is larger than 1000th prime.
+   *
+   * @param x number.
+   * @return true if x > primes[1000], false otherwise.
+   */
   public static boolean exceed1000Prime(int x) {
     return x > PRIME_LIST[PRIME_LIST.length - 1];
   }
 
+  /**
+   * Returns next closest prime number.
+   *
+   * @param x low bound.
+   * @return p > x, where p is prime if it exists in primes[1..1000], empty otherwise.
+   */
   public static Optional<Integer> getNextPrimeUnder1000(int x) {
     for (int p : PRIME_LIST) {
       if (p > x) return Optional.of(p);

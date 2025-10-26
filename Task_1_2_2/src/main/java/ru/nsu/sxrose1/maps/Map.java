@@ -2,8 +2,23 @@ package ru.nsu.sxrose1.maps;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
 
 public interface Map<K, E> {
+  record Entry<K, E>(K key, E element) {}
+
+  /**
+   * Creates new empty map.
+   *
+   * @return new map.
+   * @param <K> keys type.
+   * @param <V> elements type.
+   */
+  static <K, V> Map<K, V> empty() {
+    return new HashMap<>();
+  }
+
   /**
    * Inserts new element with key.
    *
@@ -38,5 +53,56 @@ public interface Map<K, E> {
    */
   default Map<K, E> deleteExcept(K key) throws NoSuchElementException {
     return delete(key).orElseThrow(NoSuchElementException::new);
+  }
+
+  /**
+   * @return set of map entries.
+   */
+  Set<Entry<K, E>> entries();
+
+  /**
+   * Functor mapping.
+   *
+   * @param f transformation.
+   * @return new map.
+   * @param <R> type of elements in result map.
+   */
+  default <R> Map<K, R> map(Function<E, R> f) {
+    Map<K, R> m = empty();
+
+    for (var e : entries()) {
+      m.insert(e.key, f.apply(e.element));
+    }
+
+    return m;
+  }
+
+  /**
+   * Monad join of maps.
+   *
+   * @param maps maps map to join.
+   * @return new map with keys and elements from maps.
+   */
+  static <K, E> Map<K, E> join(Map<K, Map<K, E>> maps) {
+    Map<K, E> m = empty();
+
+    for (var n : maps.entries()) {
+      for (var i : n.element.entries()) {
+        m.insert(i.key, i.element);
+      }
+    }
+
+    return m;
+  }
+
+  /**
+   * Monadic bind.
+   *
+   * @param f transformation.
+   * @return new map.
+   * @param <R> type of elements in result map.
+   */
+  default <R> Map<K, R> flatMap(Function<E, Map<K, R>> f) {
+    return join(this.map(f));
   }
 }
