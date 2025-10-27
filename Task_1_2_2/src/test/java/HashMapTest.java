@@ -1,12 +1,11 @@
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import ru.nsu.sxrose1.maps.Map;
-
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import ru.nsu.sxrose1.maps.Map;
+
 
 public class HashMapTest {
     @Test

@@ -1,12 +1,11 @@
 package ru.nsu.sxrose1.maps;
 
-import ru.nsu.sxrose1.utils.PrimesUtils;
-
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import ru.nsu.sxrose1.utils.PrimesUtils;
 
 /**
  * Map using hashes.
