@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.nsu.sxrose1.maps"},{"l":"ru.nsu.sxrose1.utils"}];updateSearchResults();

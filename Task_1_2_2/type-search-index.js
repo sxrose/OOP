@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.sxrose1.maps","l":"Map.Entry"},{"p":"ru.nsu.sxrose1.maps","l":"HashMap"},{"p":"ru.nsu.sxrose1.maps","l":"Map"},{"p":"ru.nsu.sxrose1.utils","l":"PrimesUtils"}];updateSearchResults();
