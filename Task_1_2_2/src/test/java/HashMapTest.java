@@ -1,5 +1,9 @@
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Assertions;
@@ -10,8 +14,12 @@ import ru.nsu.sxrose1.maps.Map;
 public class HashMapTest {
     @Test
     void basicTest() {
+        Assertions.assertTrue(Map.empty().isEmpty());
+
         Map<Integer, String> m =
                 Map.<Integer, String>empty().insert(1, "One").insert(2, "Two").insert(3, "Three");
+
+        Assertions.assertFalse(m.isEmpty());
 
         Assertions.assertEquals(Optional.of("One"), m.find(1));
         Assertions.assertEquals(Optional.of("Two"), m.find(2));
@@ -125,5 +133,69 @@ public class HashMapTest {
         Assertions.assertEquals(
                 Map.<Integer, Integer>empty().insert(1, 3).insert(2, 3).insert(3, 5),
                 m.map(String::length));
+    }
+
+    @Test
+    void stringTest() {
+        Assertions.assertEquals("[]", Map.empty().toString());
+        Assertions.assertEquals(
+                "[One -> 1]", Map.<String, Integer>empty().insert("One", 1).toString());
+
+        var m = Map.<Integer, String>empty().insert(1, "One").insert(2, "Two").insert(3, "Three");
+        Assertions.assertTrue(m.toString().contains("1 -> One"));
+        Assertions.assertTrue(m.toString().contains("2 -> Two"));
+        Assertions.assertTrue(m.toString().contains("3 -> Three"));
+    }
+
+    @Test
+    void iteratorTest() {
+        Assertions.assertThrows(
+                NoSuchElementException.class,
+                () -> Map.<Integer, Integer>empty().iterator().next());
+
+        var single = Map.<String, Integer>empty().insert("lol", 42);
+        var singleIter = single.iterator();
+
+        Assertions.assertEquals(new Map.Entry<>("lol", 42), singleIter.next());
+        Assertions.assertThrows(NoSuchElementException.class, singleIter::next);
+
+        var m = Map.<Integer, Integer>empty();
+        for (int i = 1; i <= 100; i++) {
+            m.insert(i, i);
+        }
+
+        var iter1 = m.iterator();
+
+        Assertions.assertDoesNotThrow(iter1::next);
+        Assertions.assertDoesNotThrow(iter1::next);
+
+        m.delete(1);
+        m.delete(2);
+
+        var iter2 = m.iterator();
+
+        Assertions.assertDoesNotThrow(iter2::next);
+        Assertions.assertThrows(ConcurrentModificationException.class, iter1::next);
+
+        Supplier<ArrayList<Iterator<Map.Entry<Integer, Integer>>>> newBatch =
+                () -> {
+                    ArrayList<Iterator<Map.Entry<Integer, Integer>>> iterBatch = new ArrayList<>();
+
+                    for (int i = 0; i < 128; i++) {
+                        iterBatch.add(m.iterator());
+                    }
+
+                    return iterBatch;
+                };
+
+        var lastBatch = newBatch.get();
+        for (var e : m.entries()) {
+            Assertions.assertDoesNotThrow(() -> m.deleteExcept(e.key()));
+            for (var i : lastBatch) {
+                Assertions.assertThrows(ConcurrentModificationException.class, i::next);
+            }
+
+            lastBatch = newBatch.get();
+        }
     }
 }

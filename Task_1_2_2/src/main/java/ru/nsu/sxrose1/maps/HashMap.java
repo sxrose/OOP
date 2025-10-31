@@ -1,6 +1,11 @@
 package ru.nsu.sxrose1.maps;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -28,9 +33,69 @@ public class HashMap<K, E> implements Map<K, E> {
 
     private record Slot(SlotTag tag, Object key, Object element) {}
 
+    private class EntryIterator implements Iterator<Entry<K, E>> {
+
+        private boolean valid = true;
+        private int ind = -1;
+        private final int endInd;
+
+        /** Creates new iterator over HashMap entries. */
+        EntryIterator() {
+            int i = data.length - 1;
+            for (; i >= 0; i--) {
+                if (data[i].tag == SlotTag.OCCUPIED) {
+                    break;
+                }
+            }
+
+            endInd = i;
+        }
+
+        /**
+         * Indicates whenever entries iterator has next element.
+         *
+         * @return true if there is next element, false otherwise.
+         */
+        @Override
+        public boolean hasNext() {
+            return ind < endInd;
+        }
+
+        /**
+         * Get next entry from iterator.
+         *
+         * @return next entry if it exists.
+         * @throws ConcurrentModificationException if HashMap was modified while this iterator is
+         *     live.
+         * @throws NoSuchElementException if there is no next entry.
+         */
+        @Override
+        public Entry<K, E> next() throws ConcurrentModificationException, NoSuchElementException {
+            if (!valid) {
+                throw new ConcurrentModificationException(
+                        "HashMap was modified while this iterator was live.");
+            }
+
+            if (!hasNext()) {
+                throw new NoSuchElementException("HashMap has no more elements.");
+            }
+
+            do {
+                ind++;
+            } while (data[ind].tag != SlotTag.OCCUPIED);
+
+            @SuppressWarnings("unchecked")
+            var e = new Entry<>((K) data[ind].key, (E) data[ind].element);
+
+            return e;
+        }
+    }
+
     private Slot[] data;
     private int load = 0;
     private int deleted = 0;
+
+    private ArrayList<WeakReference<EntryIterator>> iterators = new ArrayList<>();
 
     private int capacity() {
         return data.length;
@@ -93,8 +158,28 @@ public class HashMap<K, E> implements Map<K, E> {
                 .orElse(newCap);
     }
 
+    private void invalidateIterators() {
+        boolean allInvalid = true;
+
+        for (var ref : iterators) {
+            var iter = ref.get();
+            if (Objects.isNull(iter)) {
+                continue;
+            }
+
+            allInvalid = false;
+            iter.valid = false;
+        }
+
+        if (allInvalid) {
+            // clear and reallocate iterators list
+            iterators = new ArrayList<>();
+        }
+    }
+
     private Map<K, E> insertNoResize(Object key, Object element) {
         assert (load < capacity());
+        invalidateIterators();
         load += 1;
         data[probe(index(key))] = new Slot(SlotTag.OCCUPIED, key, element);
         return this;
@@ -117,6 +202,7 @@ public class HashMap<K, E> implements Map<K, E> {
     }
 
     private Optional<Map<K, E>> deleteNoResize(Object key) {
+        invalidateIterators();
         return findInd(key)
                 .map(
                         (ind) -> {
@@ -197,5 +283,27 @@ public class HashMap<K, E> implements Map<K, E> {
     @Override
     public boolean equals(Object other) {
         return other instanceof Map && ((Map<?, ?>) other).entries().equals(this.entries());
+    }
+
+    /**
+     * Create new iterator over HashMap entries.
+     *
+     * @return new iterator.
+     */
+    @Override
+    public Iterator<Entry<K, E>> iterator() {
+        EntryIterator iter = new EntryIterator();
+        iterators.add(new WeakReference<>(iter));
+        return iter;
+    }
+
+    /**
+     * String representation of map.
+     *
+     * @return string representation of map.
+     */
+    @Override
+    public String toString() {
+        return entries().toString();
     }
 }

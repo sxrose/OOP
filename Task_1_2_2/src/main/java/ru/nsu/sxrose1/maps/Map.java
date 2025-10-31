@@ -11,7 +11,8 @@ import java.util.function.Function;
  * @param <K> key type.
  * @param <E> element type.
  */
-public interface Map<K, E> {
+public interface Map<K, E> extends Iterable<Map.Entry<K, E>> {
+
     /**
      * Entry of the map, contains key and element.
      *
@@ -20,7 +21,17 @@ public interface Map<K, E> {
      * @param <K> key type.
      * @param <E> element type.
      */
-    record Entry<K, E>(K key, E element) {}
+    record Entry<K, E>(K key, E element) {
+        /**
+         * String representation of map entry.
+         *
+         * @return string representation of map entry.
+         */
+        @Override
+        public String toString() {
+            return String.format("%s -> %s", key.toString(), element.toString());
+        }
+    }
 
     /**
      * Creates new empty map.
@@ -75,6 +86,15 @@ public interface Map<K, E> {
      * @return set of map entries.
      */
     Set<Entry<K, E>> entries();
+
+    /**
+     * Checks if map is empty.
+     *
+     * @return true if map is empty.
+     */
+    default boolean isEmpty() {
+        return entries().isEmpty();
+    }
 
     /**
      * Functor mapping.
