@@ -4,13 +4,13 @@ import java.util.Optional;
 import java.util.function.BinaryOperator;
 
 /** Represents EvalDAG with two edges. */
-public class BiEvalDaG extends EvalDaG {
+public class BiEvaluationGraph extends EvaluationGraph {
 
-    public EvalDaG left;
-    public EvalDaG right;
+    public EvaluationGraph left;
+    public EvaluationGraph right;
     public BinaryOperator<Double> op;
 
-    BiEvalDaG(EvalDaG left, EvalDaG right, BinaryOperator<Double> op) {
+    BiEvaluationGraph(EvaluationGraph left, EvaluationGraph right, BinaryOperator<Double> op) {
         this.left = left;
         this.right = right;
         this.op = op;
