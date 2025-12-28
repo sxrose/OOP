@@ -29,6 +29,7 @@ public class ImmEvaluationGraph extends EvaluationGraph {
 
     @Override
     protected Optional<Double> evalImpl(EvalContext ctx) {
-        return producer.apply(ctx);
+        var res = producer.apply(ctx);
+        return res.flatMap(v -> Double.isNaN(v) ? Optional.empty() : Optional.of(v));
     }
 }
