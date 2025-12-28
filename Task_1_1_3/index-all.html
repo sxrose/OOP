@@ -57,13 +57,17 @@ loadScripts(document, 'script');</script>
 <div class="block">Represents E + E expressions.</div>
 </dd>
 <dt><a href="ru/nsu/sxrose1/expr/Add.html#%3Cinit%3E(ru.nsu.sxrose1.expr.Expression,ru.nsu.sxrose1.expr.Expression)" class="member-name-link">Add(Expression, Expression)</a> - Constructor for class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Add.html" title="class in ru.nsu.sxrose1.expr">Add</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs addition expression.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/AssociativeBinaryExpression.html" class="type-name-link" title="class in ru.nsu.sxrose1.expr">AssociativeBinaryExpression</a> - Class in <a href="ru/nsu/sxrose1/expr/package-summary.html">ru.nsu.sxrose1.expr</a></dt>
 <dd>
 <div class="block">Abstract class for all expressions of associative operations.</div>
 </dd>
 <dt><a href="ru/nsu/sxrose1/expr/AssociativeBinaryExpression.html#%3Cinit%3E(ru.nsu.sxrose1.expr.Expression,ru.nsu.sxrose1.expr.Expression)" class="member-name-link">AssociativeBinaryExpression(Expression, Expression)</a> - Constructor for class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/AssociativeBinaryExpression.html" title="class in ru.nsu.sxrose1.expr">AssociativeBinaryExpression</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs associative binary expression.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:B">B</h2>
 <dl class="index">
@@ -76,7 +80,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Abstract class for all binary expressions.</div>
 </dd>
 <dt><a href="ru/nsu/sxrose1/expr/BinaryExpression.html#%3Cinit%3E(ru.nsu.sxrose1.expr.Expression,ru.nsu.sxrose1.expr.Expression)" class="member-name-link">BinaryExpression(Expression, Expression)</a> - Constructor for class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/BinaryExpression.html" title="class in ru.nsu.sxrose1.expr">BinaryExpression</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs binary expression.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:C">C</h2>
 <dl class="index">
@@ -92,7 +98,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Flag for compileDAG method, simplifies expression before constructing DAG if set.</div>
 </dd>
-<dt><a href="ru/nsu/sxrose1/expr/eval/EvalUtils.html#compileDAG(ru.nsu.sxrose1.expr.Expression,int)" class="member-name-link">compileDAG(Expression, int)</a> - Static method in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/EvalUtils.html" title="class in ru.nsu.sxrose1.expr.eval">EvalUtils</a></dt>
+<dt><a href="ru/nsu/sxrose1/expr/eval/EvalUtils.html#compileEvalGraph(ru.nsu.sxrose1.expr.Expression,int)" class="member-name-link">compileEvalGraph(Expression, int)</a> - Static method in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/EvalUtils.html" title="class in ru.nsu.sxrose1.expr.eval">EvalUtils</a></dt>
 <dd>
 <div class="block">Compiles Expression to EvalDAG.</div>
 </dd>
@@ -132,7 +138,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Represents E / E expressions.</div>
 </dd>
 <dt><a href="ru/nsu/sxrose1/expr/Div.html#%3Cinit%3E(ru.nsu.sxrose1.expr.Expression,ru.nsu.sxrose1.expr.Expression)" class="member-name-link">Div(Expression, Expression)</a> - Constructor for class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Div.html" title="class in ru.nsu.sxrose1.expr">Div</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs division expression.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:E">E</h2>
 <dl class="index">
@@ -195,7 +203,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Indicates whether some other expression is equal to this one.</div>
 </dd>
 <dt><a href="ru/nsu/sxrose1/expr/Expression.html" class="type-name-link" title="class in ru.nsu.sxrose1.expr">Expression</a> - Class in <a href="ru/nsu/sxrose1/expr/package-summary.html">ru.nsu.sxrose1.expr</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Abstract representation of expression trees.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Expression.html#%3Cinit%3E()" class="member-name-link">Expression()</a> - Constructor for class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Expression.html" title="class in ru.nsu.sxrose1.expr">Expression</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -278,17 +288,45 @@ loadScripts(document, 'script');</script>
 <dt><a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html#op" class="member-name-link">op</a> - Variable in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html" title="class in ru.nsu.sxrose1.expr.eval">BiEvaluationGraph</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Add.html#operator()" class="member-name-link">operator()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Add.html" title="class in ru.nsu.sxrose1.expr">Add</a></dt>
+<dd>
+<div class="block">Returns functional representation of binary expression's operator.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/BinaryExpression.html#operator()" class="member-name-link">operator()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/BinaryExpression.html" title="class in ru.nsu.sxrose1.expr">BinaryExpression</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns functional representation of binary expression's operator.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Div.html#operator()" class="member-name-link">operator()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Div.html" title="class in ru.nsu.sxrose1.expr">Div</a></dt>
+<dd>
+<div class="block">Returns functional representation of binary expression's operator.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Mul.html#operator()" class="member-name-link">operator()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Mul.html" title="class in ru.nsu.sxrose1.expr">Mul</a></dt>
+<dd>
+<div class="block">Returns functional representation of binary expression's operator.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Sub.html#operator()" class="member-name-link">operator()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Sub.html" title="class in ru.nsu.sxrose1.expr">Sub</a></dt>
+<dd>
+<div class="block">Returns functional representation of binary expression's operator.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Add.html#opRepr()" class="member-name-link">opRepr()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Add.html" title="class in ru.nsu.sxrose1.expr">Add</a></dt>
+<dd>
+<div class="block">Returns string representation of operation's sign.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/BinaryExpression.html#opRepr()" class="member-name-link">opRepr()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/BinaryExpression.html" title="class in ru.nsu.sxrose1.expr">BinaryExpression</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns string representation of operation's sign.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Div.html#opRepr()" class="member-name-link">opRepr()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Div.html" title="class in ru.nsu.sxrose1.expr">Div</a></dt>
+<dd>
+<div class="block">Returns string representation of operation's sign.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Mul.html#opRepr()" class="member-name-link">opRepr()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Mul.html" title="class in ru.nsu.sxrose1.expr">Mul</a></dt>
+<dd>
+<div class="block">Returns string representation of operation's sign.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Sub.html#opRepr()" class="member-name-link">opRepr()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Sub.html" title="class in ru.nsu.sxrose1.expr">Sub</a></dt>
+<dd>
+<div class="block">Returns string representation of operation's sign.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:P">P</h2>
 <dl class="index">
