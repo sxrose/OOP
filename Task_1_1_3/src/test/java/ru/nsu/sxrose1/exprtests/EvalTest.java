@@ -66,6 +66,14 @@ public class EvalTest {
     void invalidResultTest() {
         Assertions.assertEquals(
                 Optional.empty(),
+                EvalUtils.eval(new Number(Double.NaN), new EvalContext(Map.of())));
+
+        Assertions.assertEquals(
+                Optional.empty(),
+                EvalUtils.eval(new Variable("x"), new EvalContext(Map.of("x", Double.NaN))));
+
+        Assertions.assertEquals(
+                Optional.empty(),
                 EvalUtils.eval(new Div(new Number(0), new Number(0)), new EvalContext(Map.of())));
 
         Assertions.assertEquals(

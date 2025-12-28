@@ -18,7 +18,8 @@ public abstract class EvaluationGraph {
      */
     public final Optional<Double> eval(EvalContext ctx) {
         if (!evaluated) {
-            evaluatedValue = evalImpl(ctx);
+            evaluatedValue =
+                    evalImpl(ctx).flatMap(v -> Double.isNaN(v) ? Optional.empty() : Optional.of(v));
             evaluated = true;
         }
 
