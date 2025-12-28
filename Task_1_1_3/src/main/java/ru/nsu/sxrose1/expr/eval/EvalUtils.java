@@ -15,26 +15,28 @@ public class EvalUtils {
     /** Flag for compileDAG method, simplifies expression before constructing DAG if set. */
     public static final int COMPILE_OPT_SIMPLIFY = 0b1;
 
-    private static EvalDAG compileDAGImpl(Expression e, HashMap<Expression, EvalDAG> acc) {
-        EvalDAG dag = acc.get(e);
-        if (Objects.nonNull(dag)) return dag;
+    private static EvalDaG compileDAGImpl(Expression e, HashMap<Expression, EvalDaG> acc) {
+        EvalDaG dag = acc.get(e);
+        if (Objects.nonNull(dag)) {
+            return dag;
+        }
 
         return switch (e) {
             case Number n -> {
-                dag = new ImmEvalDAG(n);
+                dag = new ImmEvalDaG(n);
                 acc.put(e, dag);
                 yield dag;
             }
             case Variable v -> {
-                dag = new ImmEvalDAG(v);
+                dag = new ImmEvalDaG(v);
                 acc.put(e, dag);
                 yield dag;
             }
             case BinaryExpression be -> {
-                EvalDAG l = compileDAGImpl(be.lhs, acc);
-                EvalDAG r = compileDAGImpl(be.rhs, acc);
+                EvalDaG l = compileDAGImpl(be.lhs, acc);
+                EvalDaG r = compileDAGImpl(be.rhs, acc);
 
-                yield new BiEvalDAG(l, r, be.operator());
+                yield new BiEvalDaG(l, r, be.operator());
             }
             default -> throw new AssertionError("Unhandled case");
         };
@@ -47,7 +49,7 @@ public class EvalUtils {
      * @param compileOpts compilation options, see EvalUtils.COMPILE_OPT_*.
      * @return compiled EvalDAG.
      */
-    public static EvalDAG compileDAG(Expression e, int compileOpts) {
+    public static EvalDaG compileDAG(Expression e, int compileOpts) {
         if ((compileOpts & COMPILE_OPT_SIMPLIFY) != 0) {
             e = e.simplify();
         }
@@ -63,7 +65,7 @@ public class EvalUtils {
      * @return value with respect to mappings if mappings are complete, empty otherwise.
      */
     public static Optional<Double> eval(Expression e, Map<String, Double> mapping) {
-        EvalDAG dag = compileDAG(e, 0);
+        EvalDaG dag = compileDAG(e, 0);
         return dag.eval(new EvalContext(mapping));
     }
 }

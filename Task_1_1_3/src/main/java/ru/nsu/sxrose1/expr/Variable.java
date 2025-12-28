@@ -7,6 +7,8 @@ public final class Variable extends Expression {
     public String name;
 
     /**
+     * Constructs variable expression.
+     *
      * @param name String representation of variable.
      */
     public Variable(String name) {
