@@ -67,7 +67,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:B">B</h2>
 <dl class="index">
-<dt><a href="ru/nsu/sxrose1/expr/eval/BiEvalDAG.html" class="type-name-link" title="class in ru.nsu.sxrose1.expr.eval">BiEvalDAG</a> - Class in <a href="ru/nsu/sxrose1/expr/eval/package-summary.html">ru.nsu.sxrose1.expr.eval</a></dt>
+<dt><a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html" class="type-name-link" title="class in ru.nsu.sxrose1.expr.eval">BiEvaluationGraph</a> - Class in <a href="ru/nsu/sxrose1/expr/eval/package-summary.html">ru.nsu.sxrose1.expr.eval</a></dt>
 <dd>
 <div class="block">Represents EvalDAG with two edges.</div>
 </dd>
@@ -140,7 +140,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this expression.</div>
 </dd>
-<dt><a href="ru/nsu/sxrose1/expr/eval/EvalDAG.html#eval(ru.nsu.sxrose1.expr.eval.EvalContext)" class="member-name-link">eval(EvalContext)</a> - Method in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/EvalDAG.html" title="class in ru.nsu.sxrose1.expr.eval">EvalDAG</a></dt>
+<dt><a href="ru/nsu/sxrose1/expr/eval/EvaluationGraph.html#eval(ru.nsu.sxrose1.expr.eval.EvalContext)" class="member-name-link">eval(EvalContext)</a> - Method in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/EvaluationGraph.html" title="class in ru.nsu.sxrose1.expr.eval">EvaluationGraph</a></dt>
 <dd>
 <div class="block">Evaluate DAG with respect to context.</div>
 </dd>
@@ -153,18 +153,20 @@ loadScripts(document, 'script');</script>
 <div class="block">Represents context for evaluating EvalDAGs.</div>
 </dd>
 <dt><a href="ru/nsu/sxrose1/expr/eval/EvalContext.html#%3Cinit%3E(java.util.Map)" class="member-name-link">EvalContext(Map&lt;String, Double&gt;)</a> - Constructor for class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/EvalContext.html" title="class in ru.nsu.sxrose1.expr.eval">EvalContext</a></dt>
+<dd>
+<div class="block">Constructs EvalContext.</div>
+</dd>
+<dt><a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html#evalImpl(ru.nsu.sxrose1.expr.eval.EvalContext)" class="member-name-link">evalImpl(EvalContext)</a> - Method in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html" title="class in ru.nsu.sxrose1.expr.eval">BiEvaluationGraph</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="ru/nsu/sxrose1/expr/eval/EvalDAG.html" class="type-name-link" title="class in ru.nsu.sxrose1.expr.eval">EvalDAG</a> - Class in <a href="ru/nsu/sxrose1/expr/eval/package-summary.html">ru.nsu.sxrose1.expr.eval</a></dt>
+<dt><a href="ru/nsu/sxrose1/expr/eval/EvaluationGraph.html#evalImpl(ru.nsu.sxrose1.expr.eval.EvalContext)" class="member-name-link">evalImpl(EvalContext)</a> - Method in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/EvaluationGraph.html" title="class in ru.nsu.sxrose1.expr.eval">EvaluationGraph</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/sxrose1/expr/eval/ImmEvaluationGraph.html#evalImpl(ru.nsu.sxrose1.expr.eval.EvalContext)" class="member-name-link">evalImpl(EvalContext)</a> - Method in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/ImmEvaluationGraph.html" title="class in ru.nsu.sxrose1.expr.eval">ImmEvaluationGraph</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/sxrose1/expr/eval/EvaluationGraph.html" class="type-name-link" title="class in ru.nsu.sxrose1.expr.eval">EvaluationGraph</a> - Class in <a href="ru/nsu/sxrose1/expr/eval/package-summary.html">ru.nsu.sxrose1.expr.eval</a></dt>
 <dd>
 <div class="block">Represent EvalDAG - abstraction for efficiently evaluating expressions to values.</div>
 </dd>
-<dt><a href="ru/nsu/sxrose1/expr/eval/EvalDAG.html#%3Cinit%3E()" class="member-name-link">EvalDAG()</a> - Constructor for class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/EvalDAG.html" title="class in ru.nsu.sxrose1.expr.eval">EvalDAG</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="ru/nsu/sxrose1/expr/eval/BiEvalDAG.html#evalImpl(ru.nsu.sxrose1.expr.eval.EvalContext)" class="member-name-link">evalImpl(EvalContext)</a> - Method in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/BiEvalDAG.html" title="class in ru.nsu.sxrose1.expr.eval">BiEvalDAG</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="ru/nsu/sxrose1/expr/eval/EvalDAG.html#evalImpl(ru.nsu.sxrose1.expr.eval.EvalContext)" class="member-name-link">evalImpl(EvalContext)</a> - Method in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/EvalDAG.html" title="class in ru.nsu.sxrose1.expr.eval">EvalDAG</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="ru/nsu/sxrose1/expr/eval/ImmEvalDAG.html#evalImpl(ru.nsu.sxrose1.expr.eval.EvalContext)" class="member-name-link">evalImpl(EvalContext)</a> - Method in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/ImmEvalDAG.html" title="class in ru.nsu.sxrose1.expr.eval">ImmEvalDAG</a></dt>
+<dt><a href="ru/nsu/sxrose1/expr/eval/EvaluationGraph.html#%3Cinit%3E()" class="member-name-link">EvaluationGraph()</a> - Constructor for class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/EvaluationGraph.html" title="class in ru.nsu.sxrose1.expr.eval">EvaluationGraph</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/sxrose1/expr/eval/EvalUtils.html" class="type-name-link" title="class in ru.nsu.sxrose1.expr.eval">EvalUtils</a> - Class in <a href="ru/nsu/sxrose1/expr/eval/package-summary.html">ru.nsu.sxrose1.expr.eval</a></dt>
 <dd>
@@ -205,10 +207,21 @@ loadScripts(document, 'script');</script>
 <dt><a href="ru/nsu/sxrose1/expr/Number.html#hashCode()" class="member-name-link">hashCode()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Number.html" title="class in ru.nsu.sxrose1.expr">Number</a></dt>
 <dt><a href="ru/nsu/sxrose1/expr/Variable.html#hashCode()" class="member-name-link">hashCode()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Variable.html" title="class in ru.nsu.sxrose1.expr">Variable</a></dt>
 <dt><a href="ru/nsu/sxrose1/expr/BinaryExpression.html#height()" class="member-name-link">height()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/BinaryExpression.html" title="class in ru.nsu.sxrose1.expr">BinaryExpression</a></dt>
+<dd>
+<div class="block">Returns height of expression tree.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Expression.html#height()" class="member-name-link">height()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Expression.html" title="class in ru.nsu.sxrose1.expr">Expression</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns height of expression tree.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Number.html#height()" class="member-name-link">height()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Number.html" title="class in ru.nsu.sxrose1.expr">Number</a></dt>
+<dd>
+<div class="block">Returns height of expression tree.</div>
+</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Variable.html#height()" class="member-name-link">height()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Variable.html" title="class in ru.nsu.sxrose1.expr">Variable</a></dt>
+<dd>
+<div class="block">Returns height of expression tree.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:I">I</h2>
 <dl class="index">
@@ -216,7 +229,7 @@ loadScripts(document, 'script');</script>
 <dt><a href="ru/nsu/sxrose1/expr/AssociativeBinaryExpression.html#identity()" class="member-name-link">identity()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/AssociativeBinaryExpression.html" title="class in ru.nsu.sxrose1.expr">AssociativeBinaryExpression</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Mul.html#identity()" class="member-name-link">identity()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Mul.html" title="class in ru.nsu.sxrose1.expr">Mul</a></dt>
-<dt><a href="ru/nsu/sxrose1/expr/eval/ImmEvalDAG.html" class="type-name-link" title="class in ru.nsu.sxrose1.expr.eval">ImmEvalDAG</a> - Class in <a href="ru/nsu/sxrose1/expr/eval/package-summary.html">ru.nsu.sxrose1.expr.eval</a></dt>
+<dt><a href="ru/nsu/sxrose1/expr/eval/ImmEvaluationGraph.html" class="type-name-link" title="class in ru.nsu.sxrose1.expr.eval">ImmEvaluationGraph</a> - Class in <a href="ru/nsu/sxrose1/expr/eval/package-summary.html">ru.nsu.sxrose1.expr.eval</a></dt>
 <dd>
 <div class="block">Represents EvalDAG with immediately available value (leaf node of DAG).</div>
 </dd>
@@ -231,7 +244,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:L">L</h2>
 <dl class="index">
-<dt><a href="ru/nsu/sxrose1/expr/eval/BiEvalDAG.html#left" class="member-name-link">left</a> - Variable in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/BiEvalDAG.html" title="class in ru.nsu.sxrose1.expr.eval">BiEvalDAG</a></dt>
+<dt><a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html#left" class="member-name-link">left</a> - Variable in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html" title="class in ru.nsu.sxrose1.expr.eval">BiEvaluationGraph</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/sxrose1/expr/BinaryExpression.html#lhs" class="member-name-link">lhs</a> - Variable in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/BinaryExpression.html" title="class in ru.nsu.sxrose1.expr">BinaryExpression</a></dt>
 <dd>&nbsp;</dd>
@@ -243,7 +256,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Represents E * E expressions.</div>
 </dd>
 <dt><a href="ru/nsu/sxrose1/expr/Mul.html#%3Cinit%3E(ru.nsu.sxrose1.expr.Expression,ru.nsu.sxrose1.expr.Expression)" class="member-name-link">Mul(Expression, Expression)</a> - Constructor for class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Mul.html" title="class in ru.nsu.sxrose1.expr">Mul</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs multiplication expression.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:N">N</h2>
 <dl class="index">
@@ -254,11 +269,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Represents singular number expressions.</div>
 </dd>
 <dt><a href="ru/nsu/sxrose1/expr/Number.html#%3Cinit%3E(double)" class="member-name-link">Number(double)</a> - Constructor for class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Number.html" title="class in ru.nsu.sxrose1.expr">Number</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs number expression.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:O">O</h2>
 <dl class="index">
-<dt><a href="ru/nsu/sxrose1/expr/eval/BiEvalDAG.html#op" class="member-name-link">op</a> - Variable in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/BiEvalDAG.html" title="class in ru.nsu.sxrose1.expr.eval">BiEvalDAG</a></dt>
+<dt><a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html#op" class="member-name-link">op</a> - Variable in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html" title="class in ru.nsu.sxrose1.expr.eval">BiEvaluationGraph</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/sxrose1/expr/Add.html#operator()" class="member-name-link">operator()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Add.html" title="class in ru.nsu.sxrose1.expr">Add</a></dt>
 <dt><a href="ru/nsu/sxrose1/expr/BinaryExpression.html#operator()" class="member-name-link">operator()</a> - Method in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/BinaryExpression.html" title="class in ru.nsu.sxrose1.expr">BinaryExpression</a></dt>
@@ -290,7 +307,7 @@ loadScripts(document, 'script');</script>
 <dl class="index">
 <dt><a href="ru/nsu/sxrose1/expr/BinaryExpression.html#rhs" class="member-name-link">rhs</a> - Variable in class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/BinaryExpression.html" title="class in ru.nsu.sxrose1.expr">BinaryExpression</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="ru/nsu/sxrose1/expr/eval/BiEvalDAG.html#right" class="member-name-link">right</a> - Variable in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/BiEvalDAG.html" title="class in ru.nsu.sxrose1.expr.eval">BiEvalDAG</a></dt>
+<dt><a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html#right" class="member-name-link">right</a> - Variable in class ru.nsu.sxrose1.expr.eval.<a href="ru/nsu/sxrose1/expr/eval/BiEvaluationGraph.html" title="class in ru.nsu.sxrose1.expr.eval">BiEvaluationGraph</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/sxrose1/expr/package-summary.html">ru.nsu.sxrose1.expr</a> - package ru.nsu.sxrose1.expr</dt>
 <dd>&nbsp;</dd>
@@ -346,7 +363,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Represents E - E expressions.</div>
 </dd>
 <dt><a href="ru/nsu/sxrose1/expr/Sub.html#%3Cinit%3E(ru.nsu.sxrose1.expr.Expression,ru.nsu.sxrose1.expr.Expression)" class="member-name-link">Sub(Expression, Expression)</a> - Constructor for class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Sub.html" title="class in ru.nsu.sxrose1.expr">Sub</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs subtraction expression.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:T">T</h2>
 <dl class="index">
@@ -376,7 +395,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Represents singular variable expressions.</div>
 </dd>
 <dt><a href="ru/nsu/sxrose1/expr/Variable.html#%3Cinit%3E(java.lang.String)" class="member-name-link">Variable(String)</a> - Constructor for class ru.nsu.sxrose1.expr.<a href="ru/nsu/sxrose1/expr/Variable.html" title="class in ru.nsu.sxrose1.expr">Variable</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs variable expression.</div>
+</dd>
 </dl>
 <a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a></main>
 </div>
