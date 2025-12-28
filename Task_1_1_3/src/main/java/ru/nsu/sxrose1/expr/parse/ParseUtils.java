@@ -47,13 +47,18 @@ public class ParseUtils {
 
     private static String tokenizeNumber(String buf) {
         int i = 0;
-        while (i < buf.length() && Character.isDigit(buf.charAt(i))) i++;
+        while (i < buf.length() && Character.isDigit(buf.charAt(i))) {
+            i++;
+        }
 
-        if (i >= buf.length()) return buf.substring(0, i);
+        if (i >= buf.length()) {
+            return buf.substring(0, i);
+        }
 
         if (buf.charAt(i) == '.') {
-            do i++;
-            while (i < buf.length() && Character.isDigit(buf.charAt(i)));
+            do {
+                i++;
+            } while (i < buf.length() && Character.isDigit(buf.charAt(i)));
         }
 
         return buf.substring(0, i);
@@ -62,8 +67,9 @@ public class ParseUtils {
     private static String tokenizeVariable(String buf) {
         int i = 0;
 
-        do i++;
-        while (i < buf.length()
+        do {
+            i++;
+        } while (i < buf.length()
                 && !Character.isWhitespace(buf.charAt(i))
                 && !ops.containsKey(buf.charAt(i))
                 && !brackets.containsKey(buf.charAt(i)));
@@ -125,51 +131,51 @@ public class ParseUtils {
                                     return false;
                                 });
 
-        if (negOpt.isEmpty()) return Optional.empty();
+        if (negOpt.isEmpty()) {
+            return Optional.empty();
+        }
         boolean negate = negOpt.get();
 
         return Optional.ofNullable(tokens.poll())
                 .flatMap(
-                        (tk) ->
-                                switch (tk.tokenType) {
-                                    case TokenType.BRACKET_OPEN ->
-                                            prattParse(tokens, 0)
-                                                    .map(
-                                                            (e) ->
-                                                                    negate
-                                                                            ? new Sub(
-                                                                                    new Number(0.0),
-                                                                                    e)
-                                                                            : e)
-                                                    .filter(
-                                                            (_e) -> {
-                                                                var nxt = tokens.poll();
-                                                                return Objects.nonNull(nxt)
-                                                                        && nxt.tokenType
-                                                                                == TokenType
-                                                                                        .BRACKET_CLOSE;
-                                                            });
+                        (tk) -> {
+                            return switch (tk.tokenType) {
+                                case TokenType.BRACKET_OPEN ->
+                                        prattParse(tokens, 0)
+                                                .map(
+                                                        (e) ->
+                                                                negate
+                                                                        ? new Sub(
+                                                                                new Number(0.0), e)
+                                                                        : e)
+                                                .filter(
+                                                        (e) -> {
+                                                            var nxt = tokens.poll();
+                                                            return Objects.nonNull(nxt)
+                                                                    && nxt.tokenType
+                                                                            == TokenType
+                                                                                    .BRACKET_CLOSE;
+                                                        });
 
-                                    case TokenType.NUM ->
-                                            Optional.of(
-                                                    new Number(
-                                                            tk.numValue * (negate ? -1.0 : 1.0)));
+                                case TokenType.NUM ->
+                                        Optional.of(
+                                                new Number(tk.numValue * (negate ? -1.0 : 1.0)));
 
-                                    case TokenType.VAR ->
-                                            Optional.of(new Variable(tk.varValue))
-                                                    .map(
-                                                            (e) ->
-                                                                    negate
-                                                                            ? new Sub(
-                                                                                    new Number(0.0),
-                                                                                    e)
-                                                                            : e);
+                                case TokenType.VAR ->
+                                        Optional.of(new Variable(tk.varValue))
+                                                .map(
+                                                        (e) ->
+                                                                negate
+                                                                        ? new Sub(
+                                                                                new Number(0.0), e)
+                                                                        : e);
 
-                                    default -> Optional.empty();
-                                });
+                                default -> Optional.empty();
+                            };
+                        });
     }
 
-    private static Optional<Expression> prattParse(Queue<Token> tokens, int minBP) {
+    private static Optional<Expression> prattParse(Queue<Token> tokens, int minbp) {
         if (tokens.isEmpty()) {
             return Optional.empty();
         }
@@ -190,7 +196,7 @@ public class ParseUtils {
             if (bpOpt.isEmpty()) break;
             IntPair bp = bpOpt.get();
 
-            if (bp.left < minBP) break;
+            if (bp.left < minbp) break;
 
             tokens.poll();
 

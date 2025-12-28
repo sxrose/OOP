@@ -7,6 +7,8 @@ public final class Number extends Expression {
     public double value;
 
     /**
+     * Constructs number expression.
+     *
      * @param value value of number expression.
      */
     public Number(double value) {

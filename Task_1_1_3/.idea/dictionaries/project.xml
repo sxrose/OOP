@@ -2,6 +2,7 @@
   <dictionary name="project">
     <words>
       <w>exprs</w>
+      <w>minbp</w>
       <w>repr</w>
       <w>simpl</w>
     </words>

@@ -6,6 +6,8 @@ import java.util.Map;
 /** Represents context for evaluating EvalDAGs. */
 public class EvalContext extends HashMap<String, Double> {
     /**
+     * Constructs EvalContext.
+     *
      * @param mapping Map consisting of mappings for variables.
      */
     public EvalContext(Map<String, Double> mapping) {

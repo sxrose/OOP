@@ -30,6 +30,8 @@ public abstract class Expression implements Cloneable {
     }
 
     /**
+     * Returns height of expression tree.
+     *
      * @return height of expression tree.
      */
     public abstract int height();

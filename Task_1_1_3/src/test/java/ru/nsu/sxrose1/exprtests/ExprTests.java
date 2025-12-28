@@ -1,8 +1,9 @@
 package ru.nsu.sxrose1.exprtests;
 
+import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import ru.nsu.sxrose1.expr.Add;
 import ru.nsu.sxrose1.expr.Div;
 import ru.nsu.sxrose1.expr.Expression;
@@ -15,19 +16,16 @@ import ru.nsu.sxrose1.expr.eval.EvalDAG;
 import ru.nsu.sxrose1.expr.eval.EvalUtils;
 import ru.nsu.sxrose1.expr.parse.ParseUtils;
 
-import java.util.Map;
-import java.util.Optional;
-
+/** Tests for expression package. */
 public class ExprTests {
     @Test
     void constructionTest() {
         // (x^2 + 42 * y - c) / (1 + 2 + 3)
         Expression e =
-                new Div( // 1
-                        new Sub( // 2
-                                new Add( // 3
-                                        // 4
-                                        new Mul(new Variable("x"), new Variable("x")), // 5
+                /*1*/ new Div(
+                        /*2*/ new Sub(
+                                /*3*/ new Add(
+                                        /*4*/ new Mul(new Variable("x"), /* 5 */ new Variable("x")),
                                         new Mul(new Number(42.0), new Variable("y"))),
                                 new Variable("c")),
                         new Add(new Add(new Number(1.0), new Number(2.0)), new Number(3.0)));
@@ -39,14 +37,13 @@ public class ExprTests {
 
         // x - x + x - x + x - x + x
         Expression lng =
-                new Add( // 1
-                        new Sub( // 2
-                                new Add( // 3
-                                        new Sub( // 4
-                                                // 5
-                                                /* 6 */ new Add(
+                new Add(
+                        new Sub(
+                                new Add(
+                                        new Sub(
+                                                new Add(
                                                         new Sub(
-                                                                /* 7 */ new Variable("x"),
+                                                                new Variable("x"),
                                                                 new Variable("x")),
                                                         new Variable("x")),
                                                 new Variable("x")),
