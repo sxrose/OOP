@@ -1,7 +1,6 @@
 package ru.nsu.sxrose1.exprtests;
 
 import java.util.Map;
-import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.nsu.sxrose1.expr.Add;
@@ -11,15 +10,50 @@ import ru.nsu.sxrose1.expr.Mul;
 import ru.nsu.sxrose1.expr.Number;
 import ru.nsu.sxrose1.expr.Sub;
 import ru.nsu.sxrose1.expr.Variable;
-import ru.nsu.sxrose1.expr.eval.EvalContext;
 import ru.nsu.sxrose1.expr.eval.EvalUtils;
-import ru.nsu.sxrose1.expr.eval.EvaluationGraph;
-import ru.nsu.sxrose1.expr.parse.ParseUtils;
 
-/** Tests for expression package. */
+/** Tests for expression classes. */
 public class ExprTests {
+    private void equality(Expression e) {
+        Expression shallow = e.shallowCopy();
+        Assertions.assertEquals(e, shallow);
+        Assertions.assertTrue(e.exprEquals(shallow));
+
+        Expression deep = e.clone();
+
+        Assertions.assertEquals(e, deep);
+        Assertions.assertTrue(e.exprEquals(deep));
+
+        Expression e1 = new Add(new Number(0), e);
+
+        Assertions.assertNotEquals(e, e1);
+        Assertions.assertFalse(e.exprEquals(e1));
+    }
+
     @Test
-    void constructionTest() {
+    void equalityTest() {
+        equality(new Number(0));
+        equality(new Variable("xyz"));
+        equality(new Div(new Number(0), new Number(0)));
+        equality(
+                new Div(
+                        new Sub(
+                                new Add(
+                                        new Mul(new Variable("x"), new Variable("x")),
+                                        new Mul(new Number(42.0), new Variable("y"))),
+                                new Variable("c")),
+                        new Add(new Add(new Number(1.0), new Number(2.0)), new Number(3.0))));
+    }
+
+    private void heightPlusOne(Expression e) {
+        Assertions.assertEquals(e.height() + 1, new Add(new Number(0), e).height());
+    }
+
+    @Test
+    void heightTest() {
+        Assertions.assertEquals(1, new Number(0).height());
+        Assertions.assertEquals(1, new Variable("abc").height());
+
         // (x^2 + 42 * y - c) / (1 + 2 + 3)
         Expression e =
                 /*1*/ new Div(
@@ -32,26 +66,9 @@ public class ExprTests {
 
         Assertions.assertEquals(5, e.height());
 
-        Expression single = new Number(4.2);
-        Assertions.assertEquals(1, single.height());
-
-        // x - x + x - x + x - x + x
-        Expression lng =
-                new Add(
-                        new Sub(
-                                new Add(
-                                        new Sub(
-                                                new Add(
-                                                        new Sub(
-                                                                new Variable("x"),
-                                                                new Variable("x")),
-                                                        new Variable("x")),
-                                                new Variable("x")),
-                                        new Variable("x")),
-                                new Variable("x")),
-                        new Variable("x"));
-
-        Assertions.assertEquals(7, lng.height());
+        heightPlusOne(new Number(0));
+        heightPlusOne(new Div(new Variable("x"), new Number(69)));
+        heightPlusOne(e);
     }
 
     @Test
@@ -85,53 +102,15 @@ public class ExprTests {
     }
 
     @Test
-    void evalTest() {
-        Assertions.assertEquals(Optional.of(4.2d), EvalUtils.eval(new Number(4.2), Map.of()));
-        Assertions.assertEquals(
-                Optional.of(6.9d), EvalUtils.eval(new Variable("xyz"), Map.of("xyz", 6.9d)));
-
-        // x * y + z/2 - c
-        Expression e =
-                new Sub(
-                        new Add(
-                                new Mul(new Variable("x"), new Variable("y")),
-                                new Div(new Variable("z"), new Number(2.0))),
-                        new Variable("c"));
-
-        Assertions.assertEquals(
-                Optional.of(42.0d * 2.213d + 0.5d - 13.37d),
-                EvalUtils.eval(e, Map.of("x", 42.0, "y", 2.213, "z", 1.0, "c", 13.37)));
-
-        Assertions.assertEquals(
-                Optional.empty(), EvalUtils.eval(e, Map.of("x", 42.0, "y", 2.213, "z", 1.0)));
-
-        // (x + (0 + x - x)) / x ^ 2 + (42 + 22) - 64
-        // -> x / x^2
-        Expression e2 =
-                new Sub(
-                        new Add(
-                                new Div(
-                                        new Add(
-                                                new Variable("x"),
-                                                new Sub(
-                                                        new Add(new Number(0.0), new Variable("x")),
-                                                        new Variable("x"))),
-                                        new Mul(new Variable("x"), new Variable("x"))),
-                                new Add(new Number(42.0), new Number(22.0))),
-                        new Number(64.0));
-
-        EvaluationGraph dag = EvalUtils.compileEvalGraph(e2, EvalUtils.COMPILE_OPT_SIMPLIFY);
-
-        Assertions.assertEquals(Optional.of(0.5d), dag.eval(new EvalContext(Map.of("x", 2.0d))));
-    }
-
-    @Test
-    void derivativeTest() {
+    void basicDerivativeTest() {
         Assertions.assertEquals(new Number(1.0), new Variable("x").derivative("x"));
         Assertions.assertEquals(new Number(0.0), new Variable("x").derivative("y"));
 
         Assertions.assertEquals(new Number(0.0), new Number(42.0).derivative("lol"));
+    }
 
+    @Test
+    void assumingEvalDerivativeTest() {
         Assertions.assertEquals(
                 EvalUtils.eval(
                         new Add(new Mul(new Number(20.0), new Variable("x")), new Number(1.0)),
@@ -155,30 +134,5 @@ public class ExprTests {
                                 .derivative("x")
                                 .simplify(),
                         Map.of("x", 3.0d)));
-    }
-
-    @Test
-    void parseTest() {
-        var single = ParseUtils.parse("42.123");
-
-        Assertions.assertTrue(single.isPresent());
-        Assertions.assertInstanceOf(Number.class, single.get());
-
-        Assertions.assertEquals(42.123d, ((Number) single.get()).value);
-
-        var negSingle = ParseUtils.parse("-666.6");
-        Assertions.assertTrue(negSingle.isPresent());
-
-        Assertions.assertEquals(Optional.of(-666.6d), EvalUtils.eval(negSingle.get(), Map.of()));
-
-        var e = ParseUtils.parse("(x + -(0 + x - x)) / -(x * x) + (42 + 22) - 64");
-        Assertions.assertTrue(e.isPresent());
-
-        var reparsed = ParseUtils.parse(e.get().toString());
-        Assertions.assertTrue(reparsed.isPresent());
-
-        Assertions.assertEquals(
-                EvalUtils.eval(e.get(), Map.of("x", 2.0d)),
-                EvalUtils.eval(reparsed.get(), Map.of("x", 2.0d)));
     }
 }
