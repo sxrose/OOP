@@ -12,8 +12,8 @@ import ru.nsu.sxrose1.expr.Number;
 import ru.nsu.sxrose1.expr.Sub;
 import ru.nsu.sxrose1.expr.Variable;
 import ru.nsu.sxrose1.expr.eval.EvalContext;
-import ru.nsu.sxrose1.expr.eval.EvaluationGraph;
 import ru.nsu.sxrose1.expr.eval.EvalUtils;
+import ru.nsu.sxrose1.expr.eval.EvaluationGraph;
 import ru.nsu.sxrose1.expr.parse.ParseUtils;
 
 /** Tests for expression package. */
@@ -120,7 +120,7 @@ public class ExprTests {
                                 new Add(new Number(42.0), new Number(22.0))),
                         new Number(64.0));
 
-        EvaluationGraph dag = EvalUtils.compileDAG(e2, EvalUtils.COMPILE_OPT_SIMPLIFY);
+        EvaluationGraph dag = EvalUtils.compileEvalGraph(e2, EvalUtils.COMPILE_OPT_SIMPLIFY);
 
         Assertions.assertEquals(Optional.of(0.5d), dag.eval(new EvalContext(Map.of("x", 2.0d))));
     }

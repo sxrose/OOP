@@ -15,7 +15,8 @@ public class EvalUtils {
     /** Flag for compileDAG method, simplifies expression before constructing DAG if set. */
     public static final int COMPILE_OPT_SIMPLIFY = 0b1;
 
-    private static EvaluationGraph compileDAGImpl(Expression e, HashMap<Expression, EvaluationGraph> acc) {
+    private static EvaluationGraph compileGraphImpl(
+            Expression e, HashMap<Expression, EvaluationGraph> acc) {
         EvaluationGraph dag = acc.get(e);
         if (Objects.nonNull(dag)) {
             return dag;
@@ -33,8 +34,8 @@ public class EvalUtils {
                 yield dag;
             }
             case BinaryExpression be -> {
-                EvaluationGraph l = compileDAGImpl(be.lhs, acc);
-                EvaluationGraph r = compileDAGImpl(be.rhs, acc);
+                EvaluationGraph l = compileGraphImpl(be.lhs, acc);
+                EvaluationGraph r = compileGraphImpl(be.rhs, acc);
 
                 yield new BiEvaluationGraph(l, r, be.operator());
             }
@@ -49,12 +50,12 @@ public class EvalUtils {
      * @param compileOpts compilation options, see EvalUtils.COMPILE_OPT_*.
      * @return compiled EvalDAG.
      */
-    public static EvaluationGraph compileDAG(Expression e, int compileOpts) {
+    public static EvaluationGraph compileEvalGraph(Expression e, int compileOpts) {
         if ((compileOpts & COMPILE_OPT_SIMPLIFY) != 0) {
             e = e.simplify();
         }
 
-        return compileDAGImpl(e, new HashMap<>());
+        return compileGraphImpl(e, new HashMap<>());
     }
 
     /**
@@ -65,7 +66,7 @@ public class EvalUtils {
      * @return value with respect to mappings if mappings are complete, empty otherwise.
      */
     public static Optional<Double> eval(Expression e, Map<String, Double> mapping) {
-        EvaluationGraph dag = compileDAG(e, 0);
+        EvaluationGraph dag = compileEvalGraph(e, 0);
         return dag.eval(new EvalContext(mapping));
     }
 }
