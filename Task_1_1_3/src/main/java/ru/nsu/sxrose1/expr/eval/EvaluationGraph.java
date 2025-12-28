@@ -3,7 +3,7 @@ package ru.nsu.sxrose1.expr.eval;
 import java.util.Optional;
 
 /** Represent EvalDAG - abstraction for efficiently evaluating expressions to values. */
-public abstract class EvalDaG {
+public abstract class EvaluationGraph {
     private boolean evaluated = false;
     private Optional<Double> evaluatedValue = Optional.empty();
 
