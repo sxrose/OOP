@@ -7,6 +7,8 @@ import java.util.Objects;
 /** Abstract class for all expressions of associative operations. */
 public abstract class AssociativeBinaryExpression extends BinaryExpression {
     /**
+     * Constructs associative binary expression.
+     *
      * @param lhs Left hand side of expression.
      * @param rhs Right hand side of expression.
      */

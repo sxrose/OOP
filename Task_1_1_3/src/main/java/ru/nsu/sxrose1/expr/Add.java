@@ -5,6 +5,8 @@ import java.util.function.BinaryOperator;
 /** Represents E + E expressions. */
 public final class Add extends AssociativeBinaryExpression {
     /**
+     * Constructs addition expression.
+     *
      * @param lhs Left hand side of expression.
      * @param rhs Right hand side of expression.
      */

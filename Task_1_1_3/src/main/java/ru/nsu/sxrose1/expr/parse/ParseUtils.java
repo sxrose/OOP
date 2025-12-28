@@ -118,7 +118,7 @@ public class ParseUtils {
         return Optional.of(queue);
     }
 
-    private static Optional<Expression> prattParseLHS(Queue<Token> tokens) {
+    private static Optional<Expression> prattParseLhs(Queue<Token> tokens) {
         var negOpt =
                 Optional.ofNullable(tokens.peek())
                         .map(
@@ -180,7 +180,7 @@ public class ParseUtils {
             return Optional.empty();
         }
 
-        var lhsOpt = prattParseLHS(tokens);
+        var lhsOpt = prattParseLhs(tokens);
         if (lhsOpt.isEmpty()) {
             return Optional.empty();
         }
@@ -193,10 +193,14 @@ public class ParseUtils {
                             .filter((t) -> t.tokenType == TokenType.OP)
                             .flatMap((t) -> Optional.ofNullable(bindingPowers.get(t.opValue)));
 
-            if (bpOpt.isEmpty()) break;
+            if (bpOpt.isEmpty()) {
+                break;
+            }
             IntPair bp = bpOpt.get();
 
-            if (bp.left < minbp) break;
+            if (bp.left < minbp) {
+                break;
+            }
 
             tokens.poll();
 

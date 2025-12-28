@@ -1,5 +1,6 @@
 package ru.nsu.sxrose1.expr;
 
+/** Abstract representation of expression trees. */
 public abstract class Expression implements Cloneable {
     /**
      * Indicates whether some other expression is equal to this one. Two expressions are the same if

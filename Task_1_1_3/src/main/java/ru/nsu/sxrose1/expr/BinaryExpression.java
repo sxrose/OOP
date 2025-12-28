@@ -9,6 +9,8 @@ public abstract class BinaryExpression extends Expression {
     public Expression rhs;
 
     /**
+     * Constructs binary expression.
+     *
      * @param lhs Left hand side of expression.
      * @param rhs Right hand side of expression.
      */
@@ -48,6 +50,8 @@ public abstract class BinaryExpression extends Expression {
     }
 
     /**
+     * Returns functional representation of binary expression's operator.
+     *
      * @return functional representation of binary expression's operator.
      */
     public abstract BinaryOperator<Double> operator();
@@ -84,6 +88,8 @@ public abstract class BinaryExpression extends Expression {
     }
 
     /**
+     * Returns string representation of operation's sign.
+     *
      * @return String representation of operation's sign.
      */
     protected abstract String opRepr();

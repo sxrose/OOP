@@ -15,7 +15,7 @@ public class ImmEvaluationGraph extends EvaluationGraph {
      * @param num value
      */
     ImmEvaluationGraph(Number num) {
-        producer = (_ctx) -> Optional.of(num.value);
+        producer = (ctx) -> Optional.of(num.value);
     }
 
     /**
