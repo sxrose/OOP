@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.nsu.sxrose1"},{"l":"ru.nsu.sxrose1.expr"},{"l":"ru.nsu.sxrose1.expr.eval"},{"l":"ru.nsu.sxrose1.expr.parse"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.nsu.sxrose1.expr"},{"l":"ru.nsu.sxrose1.expr.eval"},{"l":"ru.nsu.sxrose1.expr.parse"}];updateSearchResults();
