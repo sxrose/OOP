@@ -7,18 +7,28 @@ import ru.nsu.sxrose1.expr.Variable;
 
 /** Represents EvalDAG with immediately available value (leaf node of DAG). */
 public class ImmEvalDAG extends EvalDAG {
-  private final Function<EvalContext, Optional<Double>> producer;
+    private final Function<EvalContext, Optional<Double>> producer;
 
-  ImmEvalDAG(Number num) {
-    producer = (_ctx) -> Optional.of(num.value);
-  }
+    /**
+     * Constructs ImmEvalDAG representing singular value.
+     *
+     * @param num value
+     */
+    ImmEvalDAG(Number num) {
+        producer = (_ctx) -> Optional.of(num.value);
+    }
 
-  ImmEvalDAG(Variable variable) {
-    producer = (ctx) -> Optional.ofNullable(ctx.get(variable.name));
-  }
+    /**
+     * Constructs ImmEvalDAG representing singular variable.
+     *
+     * @param variable variable expression
+     */
+    ImmEvalDAG(Variable variable) {
+        producer = (ctx) -> Optional.ofNullable(ctx.get(variable.name));
+    }
 
-  @Override
-  protected Optional<Double> evalImpl(EvalContext ctx) {
-    return producer.apply(ctx);
-  }
+    @Override
+    protected Optional<Double> evalImpl(EvalContext ctx) {
+        return producer.apply(ctx);
+    }
 }
