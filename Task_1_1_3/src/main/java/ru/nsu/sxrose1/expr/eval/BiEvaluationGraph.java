@@ -18,6 +18,16 @@ public class BiEvaluationGraph extends EvaluationGraph {
 
     @Override
     protected Optional<Double> evalImpl(EvalContext ctx) {
-        return left.eval(ctx).flatMap((l) -> right.eval(ctx).map((r) -> op.apply(l, r)));
+        return left.eval(ctx)
+                .flatMap(
+                        (l) ->
+                                right.eval(ctx)
+                                        .flatMap(
+                                                (r) -> {
+                                                    double res = op.apply(l, r);
+                                                    return Double.isNaN(res)
+                                                            ? Optional.empty()
+                                                            : Optional.of(res);
+                                                }));
     }
 }
